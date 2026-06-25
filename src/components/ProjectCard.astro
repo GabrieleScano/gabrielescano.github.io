@@ -1,0 +1,76 @@
+---
+import Check from './Check.astro';
+
+interface Metric {
+  label: string;
+  value: string;
+}
+interface Props {
+  index: number;
+  title: string;
+  tagline: string;
+  repo: string;
+  stack: string[];
+  metrics: Metric[];
+  highlights: string[];
+}
+
+const { index, title, tagline, repo, stack, metrics, highlights } = Astro.props;
+const num = String(index).padStart(2, '0');
+---
+
+<article
+  class="group relative grid gap-6 rounded-2xl border border-line bg-surface p-6 transition-all hover:border-accent/40 hover:shadow-[0_1px_0_0_var(--color-line),0_18px_40px_-24px_rgba(21,128,61,0.35)] sm:p-8 md:grid-cols-[1fr_auto]"
+>
+  <div class="min-w-0">
+    <div class="flex items-baseline gap-3">
+      <span class="font-mono text-sm text-accent">{num}</span>
+      <h3 class="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+        <a href={repo} rel="noopener" class="after:absolute after:inset-0">
+          {title}
+        </a>
+      </h3>
+    </div>
+
+    <p class="mt-3 max-w-prose text-muted">{tagline}</p>
+
+    <ul class="mt-5 flex flex-wrap gap-2">
+      {
+        stack.map((tech) => (
+          <li class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted">
+            {tech}
+          </li>
+        ))
+      }
+    </ul>
+
+    <ul class="mt-6 space-y-2 border-t border-line pt-5">
+      {
+        highlights.map((point) => (
+          <li class="flex gap-3 text-sm text-ink/80">
+            <span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+            <span>{point}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <dl
+    class="flex shrink-0 flex-col gap-4 rounded-xl bg-accent-soft/60 p-5 md:w-60"
+  >
+    {
+      metrics.map((metric) => (
+        <div>
+          <dt class="sr-only">{metric.label}</dt>
+          <dd>
+            <Check>
+              <span class="font-semibold text-ink">{metric.value}</span>
+            </Check>
+            <p class="mt-1 pl-6 text-xs leading-snug text-muted">{metric.label}</p>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</article>

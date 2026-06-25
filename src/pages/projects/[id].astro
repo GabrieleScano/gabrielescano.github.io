@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Check from '../../components/Check.astro';
+import LoadChart from '../../components/LoadChart.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -43,7 +44,7 @@ const { Content } = await render(project);
         project.id === 'requirements-analyzer' && (
           <a
             href="/demo"
-            class="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            class="rounded-full bg-accent px-5 py-2 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90"
           >
             Try the live demo ↗
           </a>
@@ -132,6 +133,8 @@ const { Content } = await render(project);
     >
       <Content />
     </article>
+
+    {project.id === 'api-performance-suite' && <div class="mt-12"><LoadChart /></div>}
   </main>
 
   <Footer />

@@ -40,6 +40,34 @@ test.describe('Project detail pages', () => {
   });
 });
 
+test.describe('Dark mode', () => {
+  test('toggles the theme and persists across reloads', async ({ page }) => {
+    await page.goto('/');
+    const html = page.locator('html');
+    const initial = await html.getAttribute('data-theme');
+
+    await page.getByRole('button', { name: 'Toggle dark mode' }).click();
+    const toggled = await html.getAttribute('data-theme');
+    expect(toggled).not.toBe(initial);
+
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', toggled!);
+  });
+});
+
+test.describe('Load chart', () => {
+  test('renders and reveals a tooltip on hover', async ({ page }) => {
+    await page.goto('/projects/api-performance-suite/');
+    await expect(page.locator('#k6-chart svg')).toBeVisible();
+
+    const tip = page.locator('#k6-tip');
+    await expect(tip).toBeHidden();
+    await page.locator('#k6-capture').hover({ position: { x: 220, y: 90 } });
+    await expect(tip).toBeVisible();
+    await expect(tip).toContainText('VUs');
+  });
+});
+
 test.describe('Live demo', () => {
   test('analyses the flawed example and updates on the clean one', async ({
     page,

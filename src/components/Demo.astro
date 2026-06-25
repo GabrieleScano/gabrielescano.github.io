@@ -70,7 +70,7 @@ const initialCriteria = [
       <span
         id="reqcheck-score-label"
         class="rounded-full px-3 py-1 font-mono text-xs"
-        style="color: var(--color-low); background: color-mix(in srgb, var(--color-low) 12%, white)"
+        style="color: var(--color-low); background: color-mix(in srgb, var(--color-low) 12%, var(--color-surface))"
       ></span>
     </div>
 
@@ -182,7 +182,7 @@ const initialCriteria = [
       'mt-0.5 h-fit shrink-0 rounded-md px-2 py-0.5 font-mono text-[0.65rem] font-semibold';
     pill.textContent = SEVERITY_LABEL[f.severity];
     pill.style.color = SEVERITY_COLOR[f.severity];
-    pill.style.background = `color-mix(in srgb, ${SEVERITY_COLOR[f.severity]} 12%, white)`;
+    pill.style.background = `color-mix(in srgb, ${SEVERITY_COLOR[f.severity]} 12%, var(--color-surface))`;
 
     const body = document.createElement('div');
     body.className = 'min-w-0';
@@ -216,7 +216,7 @@ const initialCriteria = [
     scoreEl.style.color = tone.color;
     labelEl.textContent = tone.label;
     labelEl.style.color = tone.color;
-    labelEl.style.background = `color-mix(in srgb, ${tone.color} 12%, white)`;
+    labelEl.style.background = `color-mix(in srgb, ${tone.color} 12%, var(--color-surface))`;
     meterEl.style.width = `${clarityScore}%`;
     meterEl.style.backgroundColor = tone.color;
 

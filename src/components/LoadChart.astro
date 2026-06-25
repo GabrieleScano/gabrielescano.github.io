@@ -1,0 +1,188 @@
+---
+import data from '../data/k6-load.json';
+import Check from './Check.astro';
+
+const { summary, series } = data;
+
+// Chart geometry (viewBox units).
+const W = 760;
+const H = 320;
+const padL = 52;
+const padR = 48;
+const padT = 20;
+const padB = 36;
+const innerW = W - padL - padR;
+const innerH = H - padT - padB;
+
+const tMax = series[series.length - 1].t || 1;
+const yMax = Math.ceil(Math.max(...series.map((d) => d.p95)) / 100) * 100;
+const vMax = Math.max(...series.map((d) => d.vus)) || 1;
+
+const x = (t: number) => padL + (t / tMax) * innerW;
+const y = (v: number) => padT + innerH - (v / yMax) * innerH;
+const yV = (v: number) => padT + innerH - (v / vMax) * innerH;
+
+const line = (key: 'p95' | 'p50') =>
+  series.map((d, i) => `${i ? 'L' : 'M'}${x(d.t).toFixed(1)} ${y(d[key]).toFixed(1)}`).join(' ');
+
+const vuArea =
+  series.map((d, i) => `${i ? 'L' : 'M'}${x(d.t).toFixed(1)} ${yV(d.vus).toFixed(1)}`).join(' ') +
+  ` L${x(tMax).toFixed(1)} ${(padT + innerH).toFixed(1)} L${x(0).toFixed(1)} ${(padT + innerH).toFixed(1)} Z`;
+
+// Pre-computed pixel coords for the hover layer (single source of scale).
+const points = series.map((d) => ({
+  ...d,
+  px: +x(d.t).toFixed(1),
+  pyP95: +y(d.p95).toFixed(1),
+  pyP50: +y(d.p50).toFixed(1),
+}));
+
+const yTicks = [0, 0.25, 0.5, 0.75, 1].map((f) => ({
+  v: Math.round(yMax * f),
+  py: y(yMax * f),
+}));
+const xTicks = [0, 30, 60, 90, 120, tMax].map((t) => ({ t, px: x(t) }));
+
+const stats = [
+  { label: 'requests', value: summary.requests.toLocaleString() },
+  { label: 'p95 latency', value: `${summary.p95} ms` },
+  { label: 'error rate', value: `${summary.failRate}%` },
+  { label: 'max latency', value: `${summary.max} ms` },
+  { label: 'peak VUs', value: String(summary.vusMax) },
+];
+---
+
+<figure class="rounded-2xl border border-line bg-surface p-5 sm:p-7">
+  <figcaption class="mb-5">
+    <h3 class="font-display text-lg font-semibold tracking-tight text-ink">
+      K6 load test — staged ramp to {summary.vusMax} VUs
+    </h3>
+    <p class="mt-1 text-sm text-muted">
+      A real run of <code class="font-mono text-xs">k6/load.js</code> against restful-booker:
+      ramp-up → steady → peak → ramp-down over {summary.durationSec}s.
+    </p>
+  </figcaption>
+
+  <dl class="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
+    {
+      stats.map((s) => (
+        <div class="rounded-xl bg-accent-soft/50 px-3 py-2">
+          <dt class="sr-only">{s.label}</dt>
+          <dd>
+            <Check><span class="font-semibold text-ink">{s.value}</span></Check>
+            <p class="mt-0.5 pl-6 text-xs text-muted">{s.label}</p>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div id="k6-chart" class="relative" data-points={JSON.stringify(points)} data-dims={`${W},${H}`}>
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      class="w-full"
+      role="img"
+      aria-label={`Latency over time during the load test: 95th-percentile peaks around ${summary.max} milliseconds at ${summary.vusMax} virtual users, with a ${summary.failRate}% error rate.`}
+    >
+      <!-- grid + y axis (latency) -->
+      {
+        yTicks.map((t) => (
+          <g>
+            <line x1={padL} y1={t.py} x2={W - padR} y2={t.py} stroke="var(--color-line)" stroke-width="1" />
+            <text x={padL - 8} y={t.py + 4} text-anchor="end" fill="var(--color-muted)" font-size="11" font-family="var(--font-mono)">{t.v}</text>
+          </g>
+        ))
+      }
+      <text x={16} y={padT + innerH / 2} fill="var(--color-muted)" font-size="11" font-family="var(--font-mono)" transform={`rotate(-90 16 ${padT + innerH / 2})`} text-anchor="middle">ms</text>
+
+      <!-- x axis (time) -->
+      {
+        xTicks.map((t) => (
+          <text x={t.px} y={H - 12} text-anchor="middle" fill="var(--color-muted)" font-size="11" font-family="var(--font-mono)">{t.t}s</text>
+        ))
+      }
+
+      <!-- VU load profile (area) -->
+      <path d={vuArea} fill="var(--color-accent)" opacity="0.08" />
+      <text x={W - padR + 6} y={yV(vMax) + 4} fill="var(--color-muted)" font-size="11" font-family="var(--font-mono)">{vMax} VUs</text>
+
+      <!-- median + p95 lines -->
+      <path d={line('p50')} fill="none" stroke="var(--color-muted)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.8" />
+      <path d={line('p95')} fill="none" stroke="var(--color-accent)" stroke-width="2.5" />
+
+      <!-- hover layer (populated by script) -->
+      <g id="k6-hover" style="display:none">
+        <line id="k6-cross" y1={padT} y2={padT + innerH} stroke="var(--color-ink)" stroke-width="1" opacity="0.4" />
+        <circle id="k6-dot95" r="4" fill="var(--color-accent)" />
+        <circle id="k6-dot50" r="3" fill="var(--color-muted)" />
+      </g>
+      <rect id="k6-capture" x={padL} y={padT} width={innerW} height={innerH} fill="transparent" />
+    </svg>
+
+    <!-- legend -->
+    <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted">
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5" style="background:var(--color-accent)"></span> p95 latency</span>
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5 border-t-2 border-dashed" style="border-color:var(--color-muted)"></span> median</span>
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-2.5 w-3.5 rounded-sm" style="background:color-mix(in srgb, var(--color-accent) 14%, var(--color-surface))"></span> virtual users</span>
+    </div>
+
+    <!-- tooltip -->
+    <div
+      id="k6-tip"
+      class="pointer-events-none absolute z-10 hidden -translate-x-1/2 -translate-y-full rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-lg"
+    >
+    </div>
+  </div>
+</figure>
+
+<script>
+  interface P {
+    t: number; p95: number; p50: number; reqs: number; vus: number; errors: number;
+    px: number; pyP95: number; pyP50: number;
+  }
+
+  const root = document.getElementById('k6-chart');
+  if (root) {
+    const points: P[] = JSON.parse(root.dataset.points!);
+    const [W] = root.dataset.dims!.split(',').map(Number);
+    const svg = root.querySelector('svg')!;
+    const capture = document.getElementById('k6-capture')!;
+    const hover = document.getElementById('k6-hover')!;
+    const cross = document.getElementById('k6-cross')!;
+    const dot95 = document.getElementById('k6-dot95')!;
+    const dot50 = document.getElementById('k6-dot50')!;
+    const tip = document.getElementById('k6-tip')!;
+
+    const nearest = (vbX: number): P =>
+      points.reduce((a, b) => (Math.abs(b.px - vbX) < Math.abs(a.px - vbX) ? b : a));
+
+    const move = (clientX: number) => {
+      const rect = svg.getBoundingClientRect();
+      const vbX = ((clientX - rect.left) / rect.width) * W;
+      const p = nearest(vbX);
+      hover.style.display = '';
+      cross.setAttribute('x1', String(p.px));
+      cross.setAttribute('x2', String(p.px));
+      dot95.setAttribute('cx', String(p.px));
+      dot95.setAttribute('cy', String(p.pyP95));
+      dot50.setAttribute('cx', String(p.px));
+      dot50.setAttribute('cy', String(p.pyP50));
+      tip.style.display = 'block';
+      tip.style.left = `${(p.px / W) * rect.width}px`;
+      tip.style.top = `${(p.pyP95 / 320) * rect.height}px`;
+      tip.innerHTML =
+        `<div class="font-mono text-ink">${p.t}s · ${p.vus} VUs</div>` +
+        `<div class="mt-1 text-muted">p95 <span class="text-ink">${p.p95} ms</span></div>` +
+        `<div class="text-muted">median <span class="text-ink">${p.p50} ms</span></div>` +
+        `<div class="text-muted">${p.reqs} reqs · ${p.errors} errors</div>`;
+    };
+
+    const hide = () => {
+      hover.style.display = 'none';
+      tip.style.display = 'none';
+    };
+
+    capture.addEventListener('pointermove', (e) => move((e as PointerEvent).clientX));
+    capture.addEventListener('pointerleave', hide);
+  }
+</script>

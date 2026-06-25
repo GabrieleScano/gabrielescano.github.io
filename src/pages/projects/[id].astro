@@ -51,22 +51,25 @@ const { Content } = await render(project);
       }
       <a
         href={repo}
+        target="_blank"
         rel="noopener"
         class="rounded-full bg-ink px-5 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-90"
       >
-        View repository
+        View repository ↗
       </a>
       <a
         href={`${repo}/actions`}
+        target="_blank"
         rel="noopener"
         class="rounded-full border border-line px-5 py-2 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
       >
-        CI pipeline
+        CI pipeline ↗
       </a>
       {
         reportUrl && (
           <a
             href={reportUrl}
+            target="_blank"
             rel="noopener"
             class="rounded-full border border-accent px-5 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent-soft"
           >

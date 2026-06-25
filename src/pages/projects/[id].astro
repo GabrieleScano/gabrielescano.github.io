@@ -39,6 +39,16 @@ const { Content } = await render(project);
 
     <!-- Actions -->
     <div class="mt-7 flex flex-wrap gap-3">
+      {
+        project.id === 'requirements-analyzer' && (
+          <a
+            href="/demo"
+            class="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          >
+            Try the live demo ↗
+          </a>
+        )
+      }
       <a
         href={repo}
         rel="noopener"

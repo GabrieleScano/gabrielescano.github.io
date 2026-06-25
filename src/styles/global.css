@@ -19,6 +19,11 @@
   --color-accent-strong: #166534;
   --color-accent-soft: #e7f6ec;
 
+  /* Severity scale (used by the live demo) */
+  --color-high: #b91c1c;
+  --color-medium: #b45309;
+  --color-low: #6b7280;
+
   /* Typography */
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;

@@ -1,0 +1,260 @@
+---
+// Initial (flawed) example, shown server-rendered so the form is populated
+// before the island hydrates.
+const initialStory =
+  'As a shopper, I want to search for products so that I can find what I need.';
+const initialCriteria = [
+  'The search should be fast and return relevant results.',
+  'When I type a query, then matching products are shown.',
+  'Results should handle a large number of products efficiently.',
+].join('\n');
+---
+
+<section class="grid gap-8 lg:grid-cols-2">
+  <!-- Input -->
+  <form id="reqcheck-form" class="flex flex-col gap-5" novalidate>
+    <div>
+      <span class="font-mono text-xs uppercase tracking-widest text-muted">
+        Try an example
+      </span>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <button type="button" data-example="flawed" class="demo-chip">Flawed story</button>
+        <button type="button" data-example="clean" class="demo-chip">Clean story</button>
+        <button type="button" data-example="clear" class="demo-chip">Clear</button>
+      </div>
+    </div>
+
+    <div>
+      <label for="story" class="block text-sm font-medium text-ink">User story</label>
+      <textarea
+        id="story"
+        rows="3"
+        class="demo-field"
+        placeholder="As a …, I want …, so that …"
+        spellcheck="false">{initialStory}</textarea>
+    </div>
+
+    <div>
+      <label for="criteria" class="block text-sm font-medium text-ink">
+        Acceptance criteria <span class="text-muted">(one per line)</span>
+      </label>
+      <textarea
+        id="criteria"
+        rows="8"
+        class="demo-field font-mono text-sm"
+        spellcheck="false">{initialCriteria}</textarea>
+    </div>
+
+    <p class="text-xs text-muted">
+      Runs entirely in your browser — the same deterministic rule engine that
+      powers the CLI. No data leaves this page.
+    </p>
+  </form>
+
+  <!-- Results -->
+  <div
+    id="reqcheck-results"
+    class="rounded-2xl border border-line bg-surface p-6 sm:p-8"
+    aria-live="polite"
+  >
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-widest text-muted">
+          Clarity score
+        </p>
+        <p class="mt-1 font-display text-5xl font-semibold tracking-tight">
+          <span id="reqcheck-score" style="color: var(--color-low)">--</span>
+          <span class="text-2xl text-muted">/100</span>
+        </p>
+      </div>
+      <span
+        id="reqcheck-score-label"
+        class="rounded-full px-3 py-1 font-mono text-xs"
+        style="color: var(--color-low); background: color-mix(in srgb, var(--color-low) 12%, white)"
+      ></span>
+    </div>
+
+    <div class="mt-4 h-2 overflow-hidden rounded-full bg-line">
+      <div
+        id="reqcheck-meter"
+        class="h-full rounded-full transition-[width,background-color] duration-500"
+        style="width: 0%; background-color: var(--color-low)"
+      >
+      </div>
+    </div>
+
+    <p id="reqcheck-summary" class="mt-6 font-mono text-sm text-muted"></p>
+    <ul id="reqcheck-findings" class="mt-4 space-y-3"></ul>
+  </div>
+</section>
+
+<style>
+  .demo-chip {
+    border-radius: 9999px;
+    border: 1px solid var(--color-line);
+    padding: 0.375rem 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    transition: all 0.15s ease;
+  }
+  .demo-chip:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .demo-field {
+    margin-top: 0.5rem;
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    padding: 0.75rem 0.875rem;
+    color: var(--color-ink);
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .demo-field:focus-visible {
+    border-color: var(--color-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+</style>
+
+<script>
+  import { analyze } from '../lib/reqcheck/analyze';
+  import type { Finding, Severity } from '../lib/reqcheck/types';
+
+  const EXAMPLES: Record<'flawed' | 'clean', { story: string; criteria: string }> = {
+    flawed: {
+      story: 'As a shopper, I want to search for products so that I can find what I need.',
+      criteria: [
+        'The search should be fast and return relevant results.',
+        'When I type a query, then matching products are shown.',
+        'Results should handle a large number of products efficiently.',
+      ].join('\n'),
+    },
+    clean: {
+      story:
+        'As a registered user, I want to log in with my username and password so that I can access my account.',
+      criteria: [
+        'Given valid credentials, when I submit the form, then I am redirected to the inventory page within 2 seconds.',
+        "Given an empty password field, when I submit, then a 'Password is required' error is displayed.",
+        "Given an invalid username or password, when I submit, then a generic 'credentials do not match' error is shown and no session is created.",
+        'Given a locked-out account, when I submit valid credentials, then a lockout error is displayed.',
+      ].join('\n'),
+    },
+  };
+
+  const SEVERITY_COLOR: Record<Severity, string> = {
+    high: 'var(--color-high)',
+    medium: 'var(--color-medium)',
+    low: 'var(--color-low)',
+  };
+  const SEVERITY_LABEL: Record<Severity, string> = {
+    high: 'HIGH',
+    medium: 'MED',
+    low: 'LOW',
+  };
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+
+  const storyEl = $<HTMLTextAreaElement>('story');
+  const criteriaEl = $<HTMLTextAreaElement>('criteria');
+  const scoreEl = $('reqcheck-score');
+  const labelEl = $('reqcheck-score-label');
+  const meterEl = $('reqcheck-meter');
+  const summaryEl = $('reqcheck-summary');
+  const findingsEl = $('reqcheck-findings');
+
+  function toneFor(score: number): { color: string; label: string } {
+    if (score >= 80) return { color: 'var(--color-accent)', label: 'Clear' };
+    if (score >= 50) return { color: 'var(--color-medium)', label: 'Needs work' };
+    return { color: 'var(--color-high)', label: 'Unclear' };
+  }
+
+  function findingCard(f: Finding): HTMLLIElement {
+    const li = document.createElement('li');
+    li.className =
+      'flex gap-3 rounded-xl border border-line bg-bg/40 p-3.5 text-sm';
+
+    const pill = document.createElement('span');
+    pill.className =
+      'mt-0.5 h-fit shrink-0 rounded-md px-2 py-0.5 font-mono text-[0.65rem] font-semibold';
+    pill.textContent = SEVERITY_LABEL[f.severity];
+    pill.style.color = SEVERITY_COLOR[f.severity];
+    pill.style.background = `color-mix(in srgb, ${SEVERITY_COLOR[f.severity]} 12%, white)`;
+
+    const body = document.createElement('div');
+    body.className = 'min-w-0';
+
+    const cat = document.createElement('p');
+    cat.className = 'font-mono text-xs text-muted';
+    cat.textContent = f.category;
+
+    const msg = document.createElement('p');
+    msg.className = 'mt-0.5 text-ink/85';
+    msg.textContent = f.message;
+
+    body.append(cat, msg);
+
+    if (f.criterion) {
+      const crit = document.createElement('p');
+      crit.className = 'mt-1.5 border-l-2 border-line pl-3 italic text-muted';
+      crit.textContent = `"${f.criterion}"`;
+      body.append(crit);
+    }
+
+    li.append(pill, body);
+    return li;
+  }
+
+  function render(): void {
+    const { findings, clarityScore } = analyze(storyEl.value, criteriaEl.value);
+    const tone = toneFor(clarityScore);
+
+    scoreEl.textContent = String(clarityScore);
+    scoreEl.style.color = tone.color;
+    labelEl.textContent = tone.label;
+    labelEl.style.color = tone.color;
+    labelEl.style.background = `color-mix(in srgb, ${tone.color} 12%, white)`;
+    meterEl.style.width = `${clarityScore}%`;
+    meterEl.style.backgroundColor = tone.color;
+
+    findingsEl.replaceChildren();
+
+    if (findings.length === 0) {
+      summaryEl.textContent = 'No issues detected — criteria look clear and testable.';
+      return;
+    }
+
+    const count = findings.length;
+    summaryEl.textContent = `${count} finding${count === 1 ? '' : 's'}`;
+    for (const f of findings) findingsEl.append(findingCard(f));
+  }
+
+  let timer: ReturnType<typeof setTimeout>;
+  const debouncedRender = () => {
+    clearTimeout(timer);
+    timer = setTimeout(render, 250);
+  };
+
+  storyEl.addEventListener('input', debouncedRender);
+  criteriaEl.addEventListener('input', debouncedRender);
+
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-example]')) {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.example;
+      if (key === 'clear') {
+        storyEl.value = '';
+        criteriaEl.value = '';
+      } else if (key === 'flawed' || key === 'clean') {
+        storyEl.value = EXAMPLES[key].story;
+        criteriaEl.value = EXAMPLES[key].criteria;
+      }
+      render();
+    });
+  }
+
+  // Initial analysis of the server-rendered example.
+  render();
+</script>

@@ -9,6 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "playwright test",
+    "lhci": "lhci autorun",
     "astro": "astro"
   },
   "dependencies": {
@@ -20,9 +22,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@axe-core/playwright": "^4.12.1",
     "@fontsource-variable/inter": "^5.1.1",
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@fontsource-variable/space-grotesk": "^5.1.1",
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.1.0",
     "tailwindcss": "^4.1.0",

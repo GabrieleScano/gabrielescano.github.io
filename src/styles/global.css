@@ -19,10 +19,11 @@
   --color-accent-strong: #166534;
   --color-accent-soft: #e7f6ec;
 
-  /* Severity scale (used by the live demo) */
-  --color-high: #b91c1c;
-  --color-medium: #b45309;
-  --color-low: #6b7280;
+  /* Severity scale (used by the live demo) — darkened to keep small text
+     above the WCAG AA 4.5:1 contrast ratio on their tinted backgrounds. */
+  --color-high: #991b1b;
+  --color-medium: #92400e;
+  --color-low: #4b5563;
 
   /* Typography */
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;

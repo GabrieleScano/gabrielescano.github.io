@@ -16,6 +16,8 @@ const projects = defineCollection({
       /** Controls ordering on the home page. */
       order: z.number(),
       repo: z.string().url(),
+      /** Optional: published live test report (set once CI deploys it). */
+      reportUrl: z.string().url().optional(),
       /** Number of automated tests — summed into the hero counter. */
       testCount: z.number(),
       stack: z.array(z.string()),

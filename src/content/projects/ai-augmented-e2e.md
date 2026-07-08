@@ -22,6 +22,7 @@ highlights:
   - Page Object Model with private locators and intent-revealing actions only.
   - Semantic, web-first locators (getByRole / getByPlaceholder / getByTestId) — no fixed waits.
   - AI output is validated (shape + enums), never trusted blindly, and covered by unit tests.
+  - Failures are auto-triaged in CI by test-triage-kit — classified, deduplicated and published as an artifact.
 ---
 
 A complete E2E automation workflow built to be inspectable end to end:
@@ -38,6 +39,11 @@ against SauceDemo, a stable public demo application.
   test data, semantic locators and web-first assertions.
 - **Cross-browser CI** — Chromium, Firefox and WebKit on every push, with
   HTML and Allure reports as artifacts.
+- **Automated failure triage** — every run feeds
+  [test-triage-kit](https://github.com/GabrieleScano/test-triage-kit) through
+  its custom reporter; CI classifies failures (bug / flaky / infrastructure),
+  deduplicates them by root-cause fingerprint and publishes the triage report
+  as an artifact.
 
 ## Design decisions
 

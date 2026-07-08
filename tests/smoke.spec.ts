@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Home', () => {
-  test('loads the hero and three featured projects', async ({ page }) => {
+  test('loads the hero and four featured projects', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toContainText(
       'Quality starts',
     );
-    await expect(page.locator('#projects article')).toHaveCount(3);
+    await expect(page.locator('#projects article')).toHaveCount(4);
   });
 
   test('exposes the live-demo link in the nav', async ({ page }) => {
@@ -22,6 +22,7 @@ test.describe('Project detail pages', () => {
     'ai-augmented-e2e',
     'requirements-analyzer',
     'api-performance-suite',
+    'test-triage-kit',
   ]) {
     test(`renders ${slug}`, async ({ page }) => {
       await page.goto(`/projects/${slug}/`);

@@ -3,6 +3,7 @@ title: test-triage-kit
 tagline: Failure-triage pipeline for Playwright — classifies failures, deduplicates them by root cause, detects flakiness and writes AI-enriched bug reports.
 order: 4
 repo: https://github.com/GabrieleScano/test-triage-kit
+reportUrl: https://gabrielescano.github.io/test-triage-kit/
 testCount: 40
 stack:
   - TypeScript

@@ -4,7 +4,7 @@ tagline: Failure-triage pipeline for Playwright — classifies failures, dedupli
 order: 4
 repo: https://github.com/GabrieleScano/test-triage-kit
 reportUrl: https://gabrielescano.github.io/test-triage-kit/
-testCount: 48
+testCount: 52
 stack:
   - TypeScript
   - Node.js
@@ -14,7 +14,7 @@ stack:
   - GitHub Actions
 metrics:
   - label: Unit tests across every pipeline stage
-    value: 48 tests
+    value: 52 tests
   - label: Deterministic classify → fingerprint → verdict
     value: 5 stages
   - label: Files to GitHub Issues or Jira Cloud
@@ -52,7 +52,10 @@ the fingerprint embedded in their body, comment on a known failure instead of
 duplicating it, and propose (never force) a close once a fingerprint has been
 green for long enough. The Jira sink builds its issue body as **Atlassian
 Document Format** rather than Markdown, and runs against the free tier of
-Jira Cloud — no paid plan required to exercise it end to end.
+Jira Cloud — no paid plan required to exercise it end to end. Since that free
+tier has no public anonymous issue view, the [live Jira
+preview](https://gabrielescano.github.io/test-triage-kit/jira-preview.html)
+renders the real ADF payload as issue cards instead.
 
 ## AI, additive only
 

@@ -34,7 +34,7 @@ const links = [
             </li>
           ))
         }
-        <li>
+        <li class="hidden sm:block">
           <a
             href="https://linkedin.com/in/gabrielescano"
             class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
@@ -47,7 +47,7 @@ const links = [
             </svg>
           </a>
         </li>
-        <li>
+        <li class="hidden sm:block">
           <a
             href="https://github.com/GabrieleScano"
             class="rounded-full border border-line px-4 py-1.5 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
@@ -73,8 +73,85 @@ const links = [
             </svg>
           </button>
         </li>
+        <li class="sm:hidden">
+          <button
+            id="mobile-menu-toggle"
+            type="button"
+            class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+          >
+            <svg class="icon-menu-open h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg class="icon-menu-close h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18"></path>
+            </svg>
+          </button>
+        </li>
       </ul>
     </nav>
+  </div>
+
+  <div
+    id="mobile-nav-backdrop"
+    class="fixed inset-x-0 bottom-0 top-16 -z-10 bg-ink/20 opacity-0 pointer-events-none transition-opacity duration-200 ease-out sm:hidden"
+  >
+  </div>
+
+  <div
+    id="mobile-nav"
+    class="absolute inset-x-0 top-full origin-top -translate-y-1 rounded-b-2xl border-b border-line bg-bg opacity-0 shadow-lg pointer-events-none transition-all duration-200 ease-out sm:hidden"
+  >
+    <ul class="mx-auto max-w-5xl px-[var(--spacing-gutter)] py-3 text-base">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="-mx-3 block rounded-lg px-3 py-3 font-medium text-ink transition-colors hover:bg-surface"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="border-t border-line px-[var(--spacing-gutter)] py-3">
+      <p class="px-3 font-mono text-xs uppercase tracking-widest text-muted">
+        Connect
+      </p>
+      <ul class="mx-auto mt-1 max-w-5xl text-base">
+        <li>
+          <a
+            href="https://linkedin.com/in/gabrielescano"
+            target="_blank"
+            rel="me noopener"
+            class="-mx-3 flex items-center gap-3 rounded-lg px-3 py-3 text-muted transition-colors hover:bg-surface hover:text-ink"
+          >
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M13.02 13.02h-2.4v-3.76c0-.9-.02-2.05-1.25-2.05-1.25 0-1.44.98-1.44 1.99v3.82H5.53V5.98h2.3v.99h.03c.32-.6 1.1-1.24 2.27-1.24 2.43 0 2.88 1.6 2.88 3.68v3.61ZM3.56 4.98a1.39 1.39 0 1 1 0-2.78 1.39 1.39 0 0 1 0 2.78ZM4.76 13.02H2.35V5.98h2.4v7.04Z"></path>
+            </svg>
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/GabrieleScano"
+            target="_blank"
+            rel="me noopener"
+            class="-mx-3 flex items-center gap-3 rounded-lg px-3 py-3 text-muted transition-colors hover:bg-surface hover:text-ink"
+          >
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+            </svg>
+            GitHub
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </header>
 
@@ -89,6 +166,17 @@ const links = [
   html[data-theme='dark'] .icon-moon {
     display: none;
   }
+
+  /* Show the icon for the action the button will perform next. */
+  .icon-menu-close {
+    display: none;
+  }
+  #mobile-menu-toggle[aria-expanded='true'] .icon-menu-open {
+    display: none;
+  }
+  #mobile-menu-toggle[aria-expanded='true'] .icon-menu-close {
+    display: block;
+  }
 </style>
 
 <script>
@@ -101,5 +189,52 @@ const links = [
     root.dataset.theme = next;
     localStorage.setItem('theme', next);
     sync();
+  });
+
+  const menuToggle = document.getElementById('mobile-menu-toggle');
+  const menuPanel = document.getElementById('mobile-nav');
+  const menuBackdrop = document.getElementById('mobile-nav-backdrop');
+
+  const panelHiddenClasses = ['opacity-0', '-translate-y-1', 'pointer-events-none'];
+  const panelShownClasses = ['opacity-100', 'translate-y-0', 'pointer-events-auto'];
+  const backdropHiddenClasses = ['opacity-0', 'pointer-events-none'];
+  const backdropShownClasses = ['opacity-100', 'pointer-events-auto'];
+
+  const closeMenu = () => {
+    menuPanel?.classList.remove(...panelShownClasses);
+    menuPanel?.classList.add(...panelHiddenClasses);
+    menuBackdrop?.classList.remove(...backdropShownClasses);
+    menuBackdrop?.classList.add(...backdropHiddenClasses);
+    menuToggle?.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+  };
+  const openMenu = () => {
+    menuPanel?.classList.remove(...panelHiddenClasses);
+    menuPanel?.classList.add(...panelShownClasses);
+    menuBackdrop?.classList.remove(...backdropHiddenClasses);
+    menuBackdrop?.classList.add(...backdropShownClasses);
+    menuToggle?.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
+
+  menuPanel?.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLElement && e.target.tagName === 'A') closeMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menuToggle || !menuPanel || menuPanel.classList.contains('hidden')) return;
+    const target = e.target as Node;
+    if (menuPanel.contains(target) || menuToggle.contains(target)) return;
+    closeMenu();
   });
 </script>

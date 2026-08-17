@@ -22,6 +22,19 @@ const skills = [
   'Functional analysis',
   'Agile / Scrum',
 ];
+
+const timeline = [
+  { period: '2023 — 2026', role: 'QA Engineer - Basetis' },
+  { period: '2018 — 2022', role: 'Frontend Developer - GFT Group' },
+  {
+    period: '2014 — 2018',
+    role: 'Customer service & international relations - Airbnb, Booking.com, Institut Marquès',
+  },
+  {
+    period: '2005 — 2011',
+    role: 'Cultural management - Fundació Mies van der Rohe, Theatre & Dance',
+  },
+];
 ---
 
 <BaseLayout>
@@ -29,7 +42,9 @@ const skills = [
 
   <main id="main">
     <!-- Hero -->
-    <section class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-16 pt-20 sm:pt-28">
+    <section
+      class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-16 pt-20 sm:flex sm:min-h-[calc(100svh-4.5rem)] sm:flex-col sm:justify-center sm:pb-24 sm:pt-16"
+    >
       <p class="font-mono text-sm text-muted">
         QA Engineer · Functional Analyst · Barcelona
       </p>
@@ -42,18 +57,10 @@ const skills = [
 
       <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
         I clarify requirements, prevent defects early, and build test automation
-        teams can trust. Less about counting bugs — more about <em
+        teams can trust. Less about counting bugs more about <em
           class="text-ink not-italic">why</em
         > they happen.
       </p>
-
-      <div
-        class="mt-9 inline-flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-line bg-surface px-5 py-4"
-      >
-        <Check label={`${totalTests} automated tests`} />
-        <Check label="3 CI pipelines green" />
-        <Check label="cross-browser · API · load" />
-      </div>
 
       <div class="mt-9 flex flex-wrap gap-3">
         <a
@@ -82,8 +89,16 @@ const skills = [
           Featured projects
         </h2>
         <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
-          Self-contained and runnable — clone, run, inspect end to end.
+          Self-contained and runnable - clone, run, inspect end to end.
         </p>
+      </div>
+
+      <div
+        class="mt-6 inline-flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-line bg-surface px-5 py-4"
+      >
+        <Check label={`${totalTests} automated tests`} />
+        <Check label="3 CI pipelines green" />
+        <Check label="cross-browser · API · load" />
       </div>
 
       <div class="mt-10 grid gap-6">
@@ -145,6 +160,74 @@ const skills = [
           ))
         }
       </ul>
+    </section>
+
+    <!-- About -->
+    <section
+      id="about"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+    >
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+          About
+        </h2>
+        <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
+          Background and career path.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-10 sm:grid-cols-[1.2fr_1fr]">
+        <div class="space-y-4 text-base leading-relaxed text-ink/80">
+          <p>
+            My path into QA wasn't direct. Before this, I spent over a decade
+            in cultural management and customer service coordinating theatre
+            productions, managing an EU architecture prize, and handling
+            international mediation for Airbnb and Booking.com. That work
+            involved the same core skills I use now: understanding
+            requirements, communicating with stakeholders, and catching
+            problems early.
+          </p>
+          <p>
+            In 2018 I retrained as a developer at Factoría F5 and spent four
+            years as a Frontend Developer at GFT Group. I moved into QA in
+            2023, leading the QA team at Basetis. I combine
+            functional testing and automation (Playwright, TypeScript, API
+            and load testing) with AI tools across the QA cycle, from
+            requirements analysis to test generation and bug triage.
+          </p>
+          <p>
+            At Basetis I also managed and coordinated the QA team, working in
+            Agile, Scrum and Kanban environments. I hold a Master's in
+            Cultural Management (Universitat de Barcelona) and a BA in Art
+            History & Cultural Heritage (Università degli Studi di Cagliari),
+            and I'm particularly drawn to projects with social impact.
+          </p>
+          <a
+            href="https://linkedin.com/in/gabrielescano"
+            target="_blank"
+            rel="me noopener"
+            class="inline-flex items-center gap-1.5 font-mono text-sm text-accent transition-opacity hover:opacity-80"
+          >
+            Connect on LinkedIn
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div
+          class="space-y-4 border-t border-line pt-6 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0"
+        >
+          {
+            timeline.map((item) => (
+              <div class="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                <span class="shrink-0 font-mono text-xs text-accent sm:w-24">
+                  {item.period}
+                </span>
+                <span class="text-sm text-muted">{item.role}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </section>
   </main>
 

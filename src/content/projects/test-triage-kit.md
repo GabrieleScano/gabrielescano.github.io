@@ -1,6 +1,6 @@
 ---
 title: test-triage-kit
-tagline: Failure-triage pipeline for Playwright — classifies failures, deduplicates them by root cause, detects flakiness and writes AI-enriched bug reports to GitHub Issues or Jira.
+tagline: Failure-triage pipeline for Playwright - classifies failures, deduplicates them by root cause, detects flakiness and writes AI-enriched bug reports to GitHub Issues or Jira.
 order: 4
 repo: https://github.com/GabrieleScano/test-triage-kit
 reportUrl: https://gabrielescano.github.io/test-triage-kit/
@@ -21,14 +21,14 @@ metrics:
     value: 2 sinks
 highlights:
   - Fingerprinting normalizes volatile parts (ids, durations, ports) so ten tests broken by one selector become one report.
-  - Run history drives flaky detection — "failed 2 of 10 runs, never twice in a row" is not filed as a bug.
+  - Run history drives flaky detection - "failed 2 of 10 runs, never twice in a row" is not filed as a bug.
   - AI writes the report a developer wants to read; the verdicts stay rule-based and reproducible.
   - Same dedupe-by-fingerprint lifecycle ships to Jira Cloud (free tier, Atlassian Document Format) alongside GitHub Issues.
 ---
 
 Auto-filing a bug for every red test produces noise, not triage. This kit
 answers the questions a single failing test can't: **is this one bug or ten?
-Is it a bug at all? Is it new?** — deterministically, then uses AI only for
+Is it a bug at all? Is it new?** - deterministically, then uses AI only for
 what rules can't do.
 
 ## The pipeline
@@ -41,7 +41,7 @@ A rule engine classifies each failure (`assertion` / `timeout` / `network` /
 `crash` / `setup`); fingerprinting hashes the normalized category + selector +
 message so failures with one root cause cluster together; an append-only run
 history flags flaky patterns; and every failure gets a stated verdict —
-`likely-bug`, `likely-flaky` or `infrastructure` — with reasons. Outputs
+`likely-bug`, `likely-flaky` or `infrastructure` - with reasons. Outputs
 include Markdown reports, a static HTML triage page, a GitHub Issues / Jira
 lifecycle (update, don't duplicate) and a Slack digest.
 
@@ -52,7 +52,7 @@ the fingerprint embedded in their body, comment on a known failure instead of
 duplicating it, and propose (never force) a close once a fingerprint has been
 green for long enough. The Jira sink builds its issue body as **Atlassian
 Document Format** rather than Markdown, and runs against the free tier of
-Jira Cloud — no paid plan required to exercise it end to end. Since that free
+Jira Cloud - no paid plan required to exercise it end to end. Since that free
 tier has no public anonymous issue view, the [live Jira
 preview](https://gabrielescano.github.io/test-triage-kit/jira-preview.html)
 renders the real ADF payload as issue cards instead.

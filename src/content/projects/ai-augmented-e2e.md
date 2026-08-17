@@ -20,9 +20,9 @@ metrics:
     value: 3 browsers
 highlights:
   - Page Object Model with private locators and intent-revealing actions only.
-  - Semantic, web-first locators (getByRole / getByPlaceholder / getByTestId) — no fixed waits.
+  - Semantic, web-first locators (getByRole / getByPlaceholder / getByTestId) - no fixed waits.
   - AI output is validated (shape + enums), never trusted blindly, and covered by unit tests.
-  - Failures are auto-triaged in CI by test-triage-kit — classified, deduplicated and published as an artifact.
+  - Failures are auto-triaged in CI by test-triage-kit - classified, deduplicated and published as an artifact.
 ---
 
 A complete E2E automation workflow built to be inspectable end to end:
@@ -32,14 +32,14 @@ against SauceDemo, a stable public demo application.
 
 ## What it demonstrates
 
-- **Functional coverage** — authentication (valid, locked-out, data-driven
+- **Functional coverage** - authentication (valid, locked-out, data-driven
   invalid logins, auth-guard redirects), cart, sorting and a full checkout
   flow with validation.
-- **Maintainable design** — Page Object Model, custom fixtures, centralized
+- **Maintainable design** - Page Object Model, custom fixtures, centralized
   test data, semantic locators and web-first assertions.
-- **Cross-browser CI** — Chromium, Firefox and WebKit on every push, with
+- **Cross-browser CI** - Chromium, Firefox and WebKit on every push, with
   HTML and Allure reports as artifacts.
-- **Automated failure triage** — every run feeds
+- **Automated failure triage** - every run feeds
   [test-triage-kit](https://github.com/GabrieleScano/test-triage-kit) through
   its custom reporter; CI classifies failures (bug / flaky / infrastructure),
   deduplicates them by root-cause fingerprint and publishes the triage report
@@ -59,5 +59,5 @@ The AI module takes a user story and acceptance criteria and returns structured
 test cases plus observations (ambiguities, missing edge cases). Its output is
 **never trusted blindly**: a dedicated parser strips markdown fences and
 validates the response shape and enum values, and that parser is covered by a
-browser-less unit-test project — so a malformed model response fails loudly
+browser-less unit-test project - so a malformed model response fails loudly
 instead of corrupting downstream tooling.

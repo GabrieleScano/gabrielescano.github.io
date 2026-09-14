@@ -3,6 +3,8 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import Analytics from '../components/Analytics.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title?: string;
@@ -60,9 +62,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         sameAs: ['https://github.com/GabrieleScano'],
       })}
     />
+
+    <Analytics />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <slot />
+    <CookieConsent />
   </body>
 </html>

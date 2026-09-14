@@ -56,7 +56,17 @@ const languages = ['Italian (native)', 'Spanish', 'Catalan', 'English'];
       class="mx-auto flex max-w-5xl flex-col gap-3 px-[var(--spacing-gutter)] py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between"
     >
       <p>© {year} Gabriele Scano</p>
-      <Check label="Built with Astro · tested with Playwright" />
+      <div class="flex items-center gap-4">
+        <a href="/privacy" class="transition-colors hover:text-ink">Privacy</a>
+        <button
+          id="cookie-preferences-link"
+          type="button"
+          class="transition-colors hover:text-ink"
+        >
+          Cookie preferences
+        </button>
+        <Check label="Built with Astro · tested with Playwright" />
+      </div>
     </div>
   </div>
 </footer>

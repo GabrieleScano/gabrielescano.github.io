@@ -7,34 +7,44 @@ const isConfigured = /^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID) && GA_MEASUREMENT_I
 
 {
   isConfigured && (
-    <>
-      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-      <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
+    <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+
+      // Deny tracking storage by default; the cookie banner grants it on accept.
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500,
+      });
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+
+      // Only fetch the gtag.js bundle once analytics storage is actually
+      // granted, so visitors who reject (or haven't decided yet) never pay
+      // for its JS weight — this keeps the cookie banner from loading GA
+      // itself while still letting it flip consent for returning visitors.
+      let gaScriptLoaded = false;
+      window.__gaGrantConsent = () => {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        if (gaScriptLoaded) return;
+        gaScriptLoaded = true;
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+        document.head.appendChild(script);
+      };
+
+      try {
+        if (localStorage.getItem('cookie-consent') === 'accepted') {
+          window.__gaGrantConsent();
         }
-        window.gtag = gtag;
-
-        // Deny tracking storage by default; the cookie banner grants it on accept.
-        gtag('consent', 'default', {
-          analytics_storage: 'denied',
-          ad_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied',
-          wait_for_update: 500,
-        });
-
-        // Returning visitor who already accepted: grant immediately, no re-prompt.
-        try {
-          if (localStorage.getItem('cookie-consent') === 'accepted') {
-            gtag('consent', 'update', { analytics_storage: 'granted' });
-          }
-        } catch (e) {}
-
-        gtag('js', new Date());
-        gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
-      </script>
-    </>
+      } catch (e) {}
+    </script>
   )
 }

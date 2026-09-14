@@ -13,13 +13,13 @@
   >
     <p class="text-sm text-muted">
       This site uses Google Analytics to see how it's used. No analytics
-      cookies are set until you accept.
+      cookies are set until you accept. Read the
       <a
         href="/privacy"
         class="text-accent underline underline-offset-2 hover:text-accent-strong"
       >
-        Learn more
-      </a>
+        privacy policy
+      </a>.
     </p>
     <div class="flex shrink-0 items-center gap-3">
       <button
@@ -62,10 +62,11 @@
     };
 
     const applyConsent = (value) => {
-      if (typeof window.gtag !== 'function') return;
-      window.gtag('consent', 'update', {
-        analytics_storage: value === 'accepted' ? 'granted' : 'denied',
-      });
+      if (value === 'accepted') {
+        window.__gaGrantConsent?.();
+        return;
+      }
+      window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
     };
 
     const show = () => banner?.removeAttribute('hidden');

@@ -1,10 +1,18 @@
 ---
+import { getLang, useTranslations, localeBase, switchLocalePath } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const base = localeBase(lang);
+const otherLang = lang === 'en' ? 'es' : 'en';
+const langSwitchHref = switchLocalePath(Astro.url.pathname, otherLang);
+
 // Absolute hashes so the nav works from project detail pages too.
 const links = [
-  { href: '/#projects', label: 'Projects' },
-  { href: '/demo', label: 'Live demo' },
-  { href: '/#approach', label: 'Approach' },
-  { href: '/#about', label: 'About' },
+  { href: `${base}/#projects`, label: t('nav.projects') },
+  { href: `${base}/demo`, label: t('nav.demo') },
+  { href: `${base}/#approach`, label: t('nav.approach') },
+  { href: `${base}/#about`, label: t('nav.about') },
 ];
 ---
 
@@ -15,7 +23,7 @@ const links = [
     class="mx-auto flex max-w-5xl items-center justify-between px-[var(--spacing-gutter)] py-4"
   >
     <a
-      href="/"
+      href={`${base}/`}
       class="font-display text-base font-semibold tracking-tight text-ink"
     >
       Gabriele Scano
@@ -40,7 +48,7 @@ const links = [
             class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
             target="_blank"
             rel="me noopener"
-            aria-label="LinkedIn profile"
+            aria-label={t('nav.linkedin')}
           >
             <svg class="h-4 w-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
               <path d="M13.02 13.02h-2.4v-3.76c0-.9-.02-2.05-1.25-2.05-1.25 0-1.44.98-1.44 1.99v3.82H5.53V5.98h2.3v.99h.03c.32-.6 1.1-1.24 2.27-1.24 2.43 0 2.88 1.6 2.88 3.68v3.61ZM3.56 4.98a1.39 1.39 0 1 1 0-2.78 1.39 1.39 0 0 1 0 2.78ZM4.76 13.02H2.35V5.98h2.4v7.04Z"></path>
@@ -57,12 +65,21 @@ const links = [
             GitHub
           </a>
         </li>
+        <li class="hidden sm:block">
+          <a
+            href={langSwitchHref}
+            class="flex h-9 items-center justify-center rounded-full border border-line px-3 font-mono text-xs uppercase text-muted transition-colors hover:border-accent hover:text-accent"
+            aria-label={t('nav.language')}
+          >
+            {otherLang}
+          </a>
+        </li>
         <li>
           <button
             id="theme-toggle"
             type="button"
             class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
-            aria-label="Toggle dark mode"
+            aria-label={t('nav.theme')}
           >
             <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="4"></circle>
@@ -78,7 +95,7 @@ const links = [
             id="mobile-menu-toggle"
             type="button"
             class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
-            aria-label="Toggle menu"
+            aria-label={t('nav.menu')}
             aria-expanded="false"
             aria-controls="mobile-nav"
           >
@@ -121,9 +138,17 @@ const links = [
 
     <div class="border-t border-line px-[var(--spacing-gutter)] py-3">
       <p class="px-3 font-mono text-xs uppercase tracking-widest text-muted">
-        Connect
+        {t('nav.connect')}
       </p>
       <ul class="mx-auto mt-1 max-w-5xl text-base">
+        <li>
+          <a
+            href={langSwitchHref}
+            class="-mx-3 flex items-center gap-3 rounded-lg px-3 py-3 font-mono text-xs uppercase text-muted transition-colors hover:bg-surface hover:text-ink"
+          >
+            {otherLang === 'es' ? 'Español' : 'English'}
+          </a>
+        </li>
         <li>
           <a
             href="https://linkedin.com/in/gabrielescano"

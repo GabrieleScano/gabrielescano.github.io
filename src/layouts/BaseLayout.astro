@@ -5,6 +5,7 @@ import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 import Analytics from '../components/Analytics.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import { getLang, useTranslations, switchLocalePath } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -16,11 +17,16 @@ const {
   description = 'QA Engineer & Functional Analyst in Barcelona. Test automation with Playwright + TypeScript, shift-left functional analysis, and AI-augmented QA.',
 } = Astro.props;
 
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const enUrl = new URL(switchLocalePath(Astro.url.pathname, 'en'), Astro.site).toString();
+const esUrl = new URL(switchLocalePath(Astro.url.pathname, 'es'), Astro.site).toString();
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,6 +44,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -66,7 +75,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <Analytics />
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{t('skip.content')}</a>
     <slot />
     <CookieConsent />
   </body>

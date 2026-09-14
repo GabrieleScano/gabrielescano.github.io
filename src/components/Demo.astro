@@ -1,6 +1,12 @@
 ---
+import { getLang, useTranslations } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
 // Initial (flawed) example, shown server-rendered so the form is populated
-// before the island hydrates.
+// before the island hydrates. The rule engine only understands English, so
+// the example text and its findings stay in English in both locales.
 const initialStory =
   'As a shopper, I want to search for products so that I can find what I need.';
 const initialCriteria = [
@@ -15,17 +21,17 @@ const initialCriteria = [
   <form id="reqcheck-form" class="flex flex-col gap-5" novalidate>
     <div>
       <span class="font-mono text-xs uppercase tracking-widest text-muted">
-        Try an example
+        {t('demo.widget.tryExample')}
       </span>
       <div class="mt-2 flex flex-wrap gap-2">
-        <button type="button" data-example="flawed" class="demo-chip">Flawed story</button>
-        <button type="button" data-example="clean" class="demo-chip">Clean story</button>
-        <button type="button" data-example="clear" class="demo-chip">Clear</button>
+        <button type="button" data-example="flawed" class="demo-chip">{t('demo.widget.flawed')}</button>
+        <button type="button" data-example="clean" class="demo-chip">{t('demo.widget.clean')}</button>
+        <button type="button" data-example="clear" class="demo-chip">{t('demo.widget.clear')}</button>
       </div>
     </div>
 
     <div>
-      <label for="story" class="block text-sm font-medium text-ink">User story</label>
+      <label for="story" class="block text-sm font-medium text-ink">{t('demo.widget.userStory')}</label>
       <textarea
         id="story"
         rows="3"
@@ -36,7 +42,7 @@ const initialCriteria = [
 
     <div>
       <label for="criteria" class="block text-sm font-medium text-ink">
-        Acceptance criteria <span class="text-muted">(one per line)</span>
+        {t('demo.widget.criteria')} <span class="text-muted">{t('demo.widget.criteriaHint')}</span>
       </label>
       <textarea
         id="criteria"
@@ -46,8 +52,7 @@ const initialCriteria = [
     </div>
 
     <p class="text-xs text-muted">
-      Runs entirely in your browser — the same deterministic rule engine that
-      powers the CLI. No data leaves this page.
+      {t('demo.widget.runsInBrowser')}
     </p>
   </form>
 
@@ -60,7 +65,7 @@ const initialCriteria = [
     <div class="flex items-end justify-between gap-4">
       <div>
         <p class="font-mono text-xs uppercase tracking-widest text-muted">
-          Clarity score
+          {t('demo.widget.clarityScore')}
         </p>
         <p class="mt-1 font-display text-5xl font-semibold tracking-tight">
           <span id="reqcheck-score" style="color: var(--color-low)">--</span>
@@ -150,11 +155,20 @@ const initialCriteria = [
     medium: 'var(--color-medium)',
     low: 'var(--color-low)',
   };
-  const SEVERITY_LABEL: Record<Severity, string> = {
-    high: 'HIGH',
-    medium: 'MED',
-    low: 'LOW',
-  };
+  const isEs = document.documentElement.lang === 'es';
+  const SEVERITY_LABEL: Record<Severity, string> = isEs
+    ? { high: 'ALTO', medium: 'MED', low: 'BAJO' }
+    : { high: 'HIGH', medium: 'MED', low: 'LOW' };
+  const TONE_LABEL = isEs
+    ? { clear: 'Claro', needsWork: 'Necesita trabajo', unclear: 'Poco claro' }
+    : { clear: 'Clear', needsWork: 'Needs work', unclear: 'Unclear' };
+  const NO_ISSUES = isEs
+    ? 'No se detectaron problemas — los criterios parecen claros y verificables.'
+    : 'No issues detected — criteria look clear and testable.';
+  const findingWord = (count: number) =>
+    isEs
+      ? `${count} hallazgo${count === 1 ? '' : 's'}`
+      : `${count} finding${count === 1 ? '' : 's'}`;
 
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -167,9 +181,9 @@ const initialCriteria = [
   const findingsEl = $('reqcheck-findings');
 
   function toneFor(score: number): { color: string; label: string } {
-    if (score >= 80) return { color: 'var(--color-accent)', label: 'Clear' };
-    if (score >= 50) return { color: 'var(--color-medium)', label: 'Needs work' };
-    return { color: 'var(--color-high)', label: 'Unclear' };
+    if (score >= 80) return { color: 'var(--color-accent)', label: TONE_LABEL.clear };
+    if (score >= 50) return { color: 'var(--color-medium)', label: TONE_LABEL.needsWork };
+    return { color: 'var(--color-high)', label: TONE_LABEL.unclear };
   }
 
   function findingCard(f: Finding): HTMLLIElement {
@@ -223,12 +237,11 @@ const initialCriteria = [
     findingsEl.replaceChildren();
 
     if (findings.length === 0) {
-      summaryEl.textContent = 'No issues detected — criteria look clear and testable.';
+      summaryEl.textContent = NO_ISSUES;
       return;
     }
 
-    const count = findings.length;
-    summaryEl.textContent = `${count} finding${count === 1 ? '' : 's'}`;
+    summaryEl.textContent = findingWord(findings.length);
     for (const f of findings) findingsEl.append(findingCard(f));
   }
 

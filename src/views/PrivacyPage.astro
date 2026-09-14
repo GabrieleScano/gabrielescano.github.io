@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLang, useTranslations } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const isEs = lang === 'es';
+
+const lastUpdated = isEs ? 'Septiembre de 2026' : 'September 2026';
+---
+
+<BaseLayout title={t('privacy.page.title')} description={t('privacy.page.description')}>
+  <Header />
+
+  <main id="main">
+    <div class="mx-auto max-w-3xl px-[var(--spacing-gutter)] py-16 sm:py-20">
+      <p class="font-mono text-sm text-muted">{t('privacy.updated')}: {lastUpdated}</p>
+      <h1
+        class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+      >
+        {t('privacy.title')}
+      </h1>
+
+      <div class="prose prose-neutral mt-10 max-w-none">
+        {
+          isEs ? (
+            <Fragment>
+              <h2>Qué recopila este sitio</h2>
+              <p>
+                Este es un portfolio personal. No tiene cuentas de usuario, no
+                vende nada y no recopila datos personales mediante
+                formularios. La única recopilación de datos activa es{' '}
+                <strong>Google Analytics 4</strong>, usada para saber cuánta
+                gente visita el sitio y qué páginas encuentran útiles.
+              </p>
+
+              <h2>Cookies y consentimiento</h2>
+              <p>
+                En tu primera visita verás un banner preguntando si aceptas
+                cookies analíticas:
+              </p>
+              <ul>
+                <li>
+                  <strong>Aceptar</strong> — se permite a Google Analytics
+                  guardar un identificador anónimo basado en cookies en tu
+                  navegador, para reconocer visitas repetidas en estadísticas
+                  agregadas.
+                </li>
+                <li>
+                  <strong>Rechazar</strong> — no se instala ninguna cookie
+                  analítica. El{' '}
+                  <a
+                    href="https://support.google.com/analytics/answer/9976101"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Consent Mode
+                  </a>{' '}
+                  de Google mantiene bloqueado el almacenamiento analítico y
+                  como mucho se envían señales agregadas sin cookies.
+                </li>
+              </ul>
+              <p>
+                Tu elección se guarda en el <code>localStorage</code> de tu
+                navegador (no es una cookie en sí) para no volver a
+                preguntarte. Puedes cambiar de opinión en cualquier momento
+                con el enlace <strong>"Preferencias de cookies"</strong> del
+                pie de página.
+              </p>
+
+              <h2>Anonimización de IP</h2>
+              <p>
+                Google Analytics en este sitio está configurado con
+                anonimización de IP, así que tu dirección IP completa nunca
+                se almacena.
+              </p>
+
+              <h2>Terceros</h2>
+              <p>
+                Los datos analíticos son procesados por Google, bajo su
+                propia{' '}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
+                  Política de Privacidad
+                </a>. No se comparte ningún dato con ningún otro tercero.
+              </p>
+
+              <h2>Tus opciones</h2>
+              <p>
+                Puedes rechazar o retirar el consentimiento analítico en
+                cualquier momento desde el enlace del pie de página, o
+                bloquear Google Analytics por completo usando la
+                configuración de cookies de tu navegador o una extensión como
+                el propio{' '}
+                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">
+                  complemento de inhabilitación de Analytics
+                </a>{' '}
+                de Google.
+              </p>
+
+              <h2>Contacto</h2>
+              <p>
+                ¿Preguntas sobre esta política? Escribe a{' '}
+                <a href="mailto:gabrielescano.bcn@gmail.com">gabrielescano.bcn@gmail.com</a>.
+              </p>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <h2>What this site collects</h2>
+              <p>
+                This is a personal portfolio site. It doesn't have user
+                accounts, doesn't sell anything, and doesn't collect personal
+                data through forms. The only data collection in place is{' '}
+                <strong>Google Analytics 4</strong>, used to understand how
+                many people visit the site and which pages they find useful.
+              </p>
+
+              <h2>Cookies &amp; consent</h2>
+              <p>
+                On your first visit you'll see a banner asking whether you
+                accept analytics cookies:
+              </p>
+              <ul>
+                <li>
+                  <strong>Accept</strong> — Google Analytics is allowed to
+                  store an anonymized, cookie-based identifier in your
+                  browser so repeat visits can be recognized in aggregate
+                  statistics.
+                </li>
+                <li>
+                  <strong>Reject</strong> — no analytics cookies are stored.
+                  Google's{' '}
+                  <a
+                    href="https://support.google.com/analytics/answer/9976101"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Consent Mode
+                  </a>{' '}
+                  keeps analytics storage blocked and only cookieless,
+                  aggregated pings may be sent.
+                </li>
+              </ul>
+              <p>
+                Your choice is stored in your browser's{' '}
+                <code>localStorage</code> (not a cookie itself) so you aren't
+                asked again. You can change your mind at any time using the{' '}
+                <strong>"Cookie preferences"</strong> link in the footer.
+              </p>
+
+              <h2>IP anonymization</h2>
+              <p>
+                Google Analytics on this site is configured with IP
+                anonymization, so your full IP address is never stored.
+              </p>
+
+              <h2>Third parties</h2>
+              <p>
+                Analytics data is processed by Google, under Google's own{' '}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
+                  Privacy Policy
+                </a>. No data is shared with any other third party.
+              </p>
+
+              <h2>Your choices</h2>
+              <p>
+                You can reject or withdraw analytics consent at any time from
+                the footer link, or block Google Analytics entirely using
+                your browser's cookie settings or an extension such as
+                Google's own{' '}
+                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">
+                  Analytics opt-out add-on
+                </a>.
+              </p>
+
+              <h2>Contact</h2>
+              <p>
+                Questions about this policy? Reach out at{' '}
+                <a href="mailto:gabrielescano.bcn@gmail.com">gabrielescano.bcn@gmail.com</a>.
+              </p>
+            </Fragment>
+          )
+        }
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

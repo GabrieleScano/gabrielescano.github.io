@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import ProjectDetail from '../../views/ProjectDetail.astro';
+import ProjectDetail from '../../../views/ProjectDetail.astro';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects', ({ id }) => id.startsWith('en/'));
+  const projects = await getCollection('projects', ({ id }) => id.startsWith('es/'));
   return projects.map((project) => ({
     params: { id: project.id.split('/').slice(1).join('/') },
     props: { project },

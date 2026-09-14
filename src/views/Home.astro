@@ -1,0 +1,229 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Check from '../components/Check.astro';
+import { getLang, useTranslations, localeBase } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const base = localeBase(lang);
+
+const projects = (await getCollection('projects', ({ id }) => id.startsWith(`${lang}/`))).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const slug = (id: string) => id.split('/').slice(1).join('/');
+
+const totalTests = projects.reduce((sum, p) => sum + p.data.testCount, 0);
+
+const skills =
+  lang === 'es'
+    ? [
+        'Playwright',
+        'TypeScript',
+        'Page Object Model',
+        'Testing de API',
+        'Pruebas de carga con K6',
+        'CI/CD',
+        'Análisis funcional',
+        'Agile / Scrum',
+      ]
+    : [
+        'Playwright',
+        'TypeScript',
+        'Page Object Model',
+        'API testing',
+        'K6 load testing',
+        'CI/CD',
+        'Functional analysis',
+        'Agile / Scrum',
+      ];
+
+const timeline = [
+  { period: '2023 — 2026', role: t('about.timeline.1') },
+  { period: '2018 — 2022', role: t('about.timeline.2') },
+  { period: '2014 — 2018', role: t('about.timeline.3') },
+  { period: '2005 — 2011', role: t('about.timeline.4') },
+];
+---
+
+<BaseLayout title={t('home.page.title')} description={t('home.page.description')}>
+  <Header />
+
+  <main id="main">
+    <!-- Hero -->
+    <section
+      class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-16 pt-20 sm:flex sm:min-h-[calc(100svh-4.5rem)] sm:flex-col sm:justify-center sm:pb-24 sm:pt-16"
+    >
+      <p class="font-mono text-sm text-muted">
+        {t('hero.eyebrow')}
+      </p>
+
+      <h1
+        class="mt-6 max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl md:text-7xl"
+      >
+        {t('hero.title.line1')}<br />{t('hero.title.line2')}
+      </h1>
+
+      <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
+        {t('hero.lead.pre')}<em class="text-ink not-italic">{t('hero.lead.em')}</em>{t('hero.lead.post')}
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a
+          href="#projects"
+          class="rounded-full bg-ink px-6 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+        >
+          {t('hero.cta.projects')}
+        </a>
+        <a
+          href="https://github.com/GabrieleScano"
+          rel="me noopener"
+          class="rounded-full border border-line px-6 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+        >
+          {t('hero.cta.github')}
+        </a>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section
+      id="projects"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+    >
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+          {t('projects.heading')}
+        </h2>
+        <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
+          {t('projects.subheading')}
+        </p>
+      </div>
+
+      <div
+        class="mt-6 inline-flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-line bg-surface px-5 py-4"
+      >
+        <Check label={`${totalTests} ${t('projects.stat.tests')}`} />
+        <Check label={t('projects.stat.ci')} />
+        <Check label={t('projects.stat.coverage')} />
+      </div>
+
+      <div class="mt-10 grid gap-6">
+        {
+          projects.map((project, i) => (
+            <ProjectCard
+              index={i + 1}
+              title={project.data.title}
+              tagline={project.data.tagline}
+              href={`${base}/projects/${slug(project.id)}/`}
+              repo={project.data.repo}
+              stack={project.data.stack}
+              metrics={project.data.metrics}
+              highlights={project.data.highlights}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section
+      id="approach"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+    >
+      <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+        {t('approach.heading')}
+      </h2>
+      <div class="mt-10 grid gap-8 sm:grid-cols-3">
+        <div>
+          <h3 class="font-mono text-sm text-accent">{t('approach.shiftleft.title')}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink/80">
+            {t('approach.shiftleft.body')}
+          </p>
+        </div>
+        <div>
+          <h3 class="font-mono text-sm text-accent">{t('approach.automation.title')}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink/80">
+            {t('approach.automation.body')}
+          </p>
+        </div>
+        <div>
+          <h3 class="font-mono text-sm text-accent">{t('approach.ai.title')}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink/80">
+            {t('approach.ai.body')}
+          </p>
+        </div>
+      </div>
+
+      <ul class="mt-12 flex flex-wrap gap-2">
+        {
+          skills.map((skill) => (
+            <li class="rounded-full border border-line px-3.5 py-1.5 font-mono text-xs text-muted">
+              {skill}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- About -->
+    <section
+      id="about"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img
+            src="/gabriele-scano.jpg"
+            alt="Gabriele Scano"
+            width="80"
+            height="80"
+            class="h-16 w-16 rounded-2xl border border-line object-cover sm:h-20 sm:w-20"
+          />
+          <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+            {t('about.heading')}
+          </h2>
+        </div>
+        <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
+          {t('about.subheading')}
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-10 sm:grid-cols-[1.2fr_1fr]">
+        <div class="space-y-4 text-base leading-relaxed text-ink/80">
+          <p>{t('about.p1')}</p>
+          <p>{t('about.p2')}</p>
+          <p>{t('about.p3')}</p>
+          <a
+            href="https://linkedin.com/in/gabrielescano"
+            target="_blank"
+            rel="me noopener"
+            class="inline-flex items-center gap-1.5 font-mono text-sm text-accent transition-opacity hover:opacity-80"
+          >
+            {t('about.linkedin')}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div
+          class="space-y-4 border-t border-line pt-6 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0"
+        >
+          {
+            timeline.map((item) => (
+              <div class="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                <span class="shrink-0 font-mono text-xs text-accent sm:w-24">
+                  {item.period}
+                </span>
+                <span class="text-sm text-muted">{item.role}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

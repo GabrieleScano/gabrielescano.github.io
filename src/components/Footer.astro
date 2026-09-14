@@ -1,7 +1,12 @@
 ---
 import Check from './Check.astro';
+import { getLang, useTranslations, localeBase } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const base = localeBase(lang);
 const year = new Date().getFullYear();
-const languages = ['Italian (native)', 'Spanish', 'Catalan', 'English'];
+const spokenLanguages = [t('footer.lang.1'), t('footer.lang.2'), t('footer.lang.3'), t('footer.lang.4')];
 ---
 
 <footer id="contact" class="border-t border-line bg-surface">
@@ -10,17 +15,17 @@ const languages = ['Italian (native)', 'Spanish', 'Catalan', 'English'];
   >
     <div>
       <h2 class="font-display text-2xl font-semibold tracking-tight text-ink">
-        Let's talk quality.
+        {t('footer.heading')}
       </h2>
       <p class="mt-3 max-w-sm text-muted">
-        Open to QA Automation and Functional roles in Barcelona or remote.
+        {t('footer.subheading')}
       </p>
       <div class="mt-6 flex flex-wrap gap-3">
         <a
           href="mailto:gabrielescano.bcn@gmail.com"
           class="rounded-full bg-ink px-5 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-90"
         >
-          Email me
+          {t('footer.email')}
         </a>
         <a
           href="https://linkedin.com/in/gabrielescano"
@@ -43,10 +48,10 @@ const languages = ['Italian (native)', 'Spanish', 'Catalan', 'English'];
 
     <div class="sm:justify-self-end">
       <h3 class="font-mono text-xs uppercase tracking-widest text-muted">
-        Languages
+        {t('footer.languages')}
       </h3>
       <ul class="mt-3 space-y-1 text-sm text-ink/80">
-        {languages.map((lang) => <li>{lang}</li>)}
+        {spokenLanguages.map((l) => <li>{l}</li>)}
       </ul>
     </div>
   </div>
@@ -57,15 +62,15 @@ const languages = ['Italian (native)', 'Spanish', 'Catalan', 'English'];
     >
       <p>© {year} Gabriele Scano</p>
       <div class="flex items-center gap-4">
-        <a href="/privacy" class="transition-colors hover:text-ink">Privacy</a>
+        <a href={`${base}/privacy`} class="transition-colors hover:text-ink">{t('footer.privacy')}</a>
         <button
           id="cookie-preferences-link"
           type="button"
           class="transition-colors hover:text-ink"
         >
-          Cookie preferences
+          {t('footer.cookies')}
         </button>
-        <Check label="Built with Astro · tested with Playwright" />
+        <Check label={t('footer.built')} />
       </div>
     </div>
   </div>

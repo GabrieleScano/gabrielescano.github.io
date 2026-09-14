@@ -1,24 +1,28 @@
 ---
+import { getLang, useTranslations, localeBase } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const base = localeBase(lang);
 ---
 
 <div
   id="cookie-banner"
   hidden
   role="region"
-  aria-label="Cookie consent"
+  aria-label={t('cookie.aria')}
   class="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/90"
 >
   <div
     class="mx-auto flex max-w-5xl flex-col gap-4 px-[var(--spacing-gutter)] py-5 sm:flex-row sm:items-center sm:justify-between"
   >
     <p class="text-sm text-muted">
-      This site uses Google Analytics to see how it's used. No analytics
-      cookies are set until you accept. Read the
+      {t('cookie.text')}
       <a
-        href="/privacy"
+        href={`${base}/privacy`}
         class="text-accent underline underline-offset-2 hover:text-accent-strong"
       >
-        privacy policy
+        {t('cookie.link')}
       </a>.
     </p>
     <div class="flex shrink-0 items-center gap-3">
@@ -27,14 +31,14 @@
         type="button"
         class="rounded-full border border-line px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
       >
-        Reject
+        {t('cookie.reject')}
       </button>
       <button
         id="cookie-accept"
         type="button"
         class="rounded-full bg-accent px-4 py-1.5 text-sm font-medium text-accent-ink transition-colors hover:bg-accent-strong"
       >
-        Accept
+        {t('cookie.accept')}
       </button>
     </div>
   </div>

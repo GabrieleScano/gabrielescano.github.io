@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Demo from '../components/Demo.astro';
+import { getLang, useTranslations, localeBase } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const base = localeBase(lang);
+---
+
+<BaseLayout title={t('demo.page.title')} description={t('demo.page.description')}>
+  <Header />
+
+  <main id="main" class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-12 pt-12">
+    <a
+      href={`${base}/#projects`}
+      class="font-mono text-sm text-muted transition-colors hover:text-ink"
+    >
+      {t('projects.back')}
+    </a>
+
+    <header class="mt-6 max-w-2xl">
+      <p class="font-mono text-sm text-accent">{t('demo.eyebrow')}</p>
+      <h1
+        class="mt-3 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl"
+      >
+        {t('demo.title')}
+      </h1>
+      <p class="mt-4 text-lg text-muted">
+        {t('demo.lead')}
+      </p>
+      {
+        lang === 'es' && (
+          <p class="mt-3 text-sm text-muted">{t('demo.note')}</p>
+        )
+      }
+    </header>
+
+    <div class="mt-10">
+      <Demo />
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

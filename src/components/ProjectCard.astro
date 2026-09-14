@@ -1,5 +1,9 @@
 ---
 import Check from './Check.astro';
+import { getLang, useTranslations } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 
 interface Metric {
   label: string;
@@ -42,7 +46,7 @@ const num = String(index).padStart(2, '0');
       rel="noopener"
       class="relative z-10 mt-3 inline-block font-mono text-xs text-muted underline-offset-4 hover:text-accent hover:underline"
     >
-      GitHub ↗
+      {t('projects.repo')}
     </a>
 
     <ul class="mt-5 flex flex-wrap gap-2">

@@ -1,6 +1,10 @@
 ---
 import data from '../data/k6-load.json';
 import Check from './Check.astro';
+import { getLang } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const isEs = lang === 'es';
 
 const { summary, series } = data;
 
@@ -43,23 +47,42 @@ const yTicks = [0, 0.25, 0.5, 0.75, 1].map((f) => ({
 }));
 const xTicks = [0, 30, 60, 90, 120, tMax].map((t) => ({ t, px: x(t) }));
 
-const stats = [
-  { label: 'requests', value: summary.requests.toLocaleString() },
-  { label: 'p95 latency', value: `${summary.p95} ms` },
-  { label: 'error rate', value: `${summary.failRate}%` },
-  { label: 'max latency', value: `${summary.max} ms` },
-  { label: 'peak VUs', value: String(summary.vusMax) },
-];
+const stats = isEs
+  ? [
+      { label: 'peticiones', value: summary.requests.toLocaleString() },
+      { label: 'latencia p95', value: `${summary.p95} ms` },
+      { label: 'tasa de error', value: `${summary.failRate}%` },
+      { label: 'latencia máxima', value: `${summary.max} ms` },
+      { label: 'VUs pico', value: String(summary.vusMax) },
+    ]
+  : [
+      { label: 'requests', value: summary.requests.toLocaleString() },
+      { label: 'p95 latency', value: `${summary.p95} ms` },
+      { label: 'error rate', value: `${summary.failRate}%` },
+      { label: 'max latency', value: `${summary.max} ms` },
+      { label: 'peak VUs', value: String(summary.vusMax) },
+    ];
 ---
 
 <figure class="rounded-2xl border border-line bg-surface p-5 sm:p-7">
   <figcaption class="mb-5">
     <h3 class="font-display text-lg font-semibold tracking-tight text-ink">
-      K6 load test — staged ramp to {summary.vusMax} VUs
+      {isEs
+        ? `Test de carga K6 — rampa escalonada hasta ${summary.vusMax} VUs`
+        : `K6 load test — staged ramp to ${summary.vusMax} VUs`}
     </h3>
     <p class="mt-1 text-sm text-muted">
-      A real run of <code class="font-mono text-xs">k6/load.js</code> against restful-booker:
-      ramp-up → steady → peak → ramp-down over {summary.durationSec}s.
+      {isEs ? (
+        <>
+          Una ejecución real de <code class="font-mono text-xs">k6/load.js</code> contra restful-booker:
+          subida → estable → pico → bajada durante {summary.durationSec}s.
+        </>
+      ) : (
+        <>
+          A real run of <code class="font-mono text-xs">k6/load.js</code> against restful-booker:
+          ramp-up → steady → peak → ramp-down over {summary.durationSec}s.
+        </>
+      )}
     </p>
   </figcaption>
 
@@ -82,7 +105,9 @@ const stats = [
       viewBox={`0 0 ${W} ${H}`}
       class="w-full"
       role="img"
-      aria-label={`Latency over time during the load test: 95th-percentile peaks around ${summary.max} milliseconds at ${summary.vusMax} virtual users, with a ${summary.failRate}% error rate.`}
+      aria-label={isEs
+        ? `Latencia a lo largo del test de carga: el percentil 95 alcanza un pico de ${summary.max} milisegundos con ${summary.vusMax} usuarios virtuales, con una tasa de error del ${summary.failRate}%.`
+        : `Latency over time during the load test: 95th-percentile peaks around ${summary.max} milliseconds at ${summary.vusMax} virtual users, with a ${summary.failRate}% error rate.`}
     >
       <!-- grid + y axis (latency) -->
       {
@@ -121,9 +146,9 @@ const stats = [
 
     <!-- legend -->
     <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted">
-      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5" style="background:var(--color-accent)"></span> p95 latency</span>
-      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5 border-t-2 border-dashed" style="border-color:var(--color-muted)"></span> median</span>
-      <span class="inline-flex items-center gap-2"><span class="inline-block h-2.5 w-3.5 rounded-sm" style="background:color-mix(in srgb, var(--color-accent) 14%, var(--color-surface))"></span> virtual users</span>
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5" style="background:var(--color-accent)"></span> {isEs ? 'latencia p95' : 'p95 latency'}</span>
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-0.5 w-5 border-t-2 border-dashed" style="border-color:var(--color-muted)"></span> {isEs ? 'mediana' : 'median'}</span>
+      <span class="inline-flex items-center gap-2"><span class="inline-block h-2.5 w-3.5 rounded-sm" style="background:color-mix(in srgb, var(--color-accent) 14%, var(--color-surface))"></span> {isEs ? 'usuarios virtuales' : 'virtual users'}</span>
     </div>
 
     <!-- tooltip -->
@@ -152,6 +177,7 @@ const stats = [
     const dot95 = document.getElementById('k6-dot95')!;
     const dot50 = document.getElementById('k6-dot50')!;
     const tip = document.getElementById('k6-tip')!;
+    const isEs = document.documentElement.lang === 'es';
 
     const nearest = (vbX: number): P =>
       points.reduce((a, b) => (Math.abs(b.px - vbX) < Math.abs(a.px - vbX) ? b : a));
@@ -170,11 +196,15 @@ const stats = [
       tip.style.display = 'block';
       tip.style.left = `${(p.px / W) * rect.width}px`;
       tip.style.top = `${(p.pyP95 / 320) * rect.height}px`;
-      tip.innerHTML =
-        `<div class="font-mono text-ink">${p.t}s · ${p.vus} VUs</div>` +
-        `<div class="mt-1 text-muted">p95 <span class="text-ink">${p.p95} ms</span></div>` +
-        `<div class="text-muted">median <span class="text-ink">${p.p50} ms</span></div>` +
-        `<div class="text-muted">${p.reqs} reqs · ${p.errors} errors</div>`;
+      tip.innerHTML = isEs
+        ? `<div class="font-mono text-ink">${p.t}s · ${p.vus} VUs</div>` +
+          `<div class="mt-1 text-muted">p95 <span class="text-ink">${p.p95} ms</span></div>` +
+          `<div class="text-muted">mediana <span class="text-ink">${p.p50} ms</span></div>` +
+          `<div class="text-muted">${p.reqs} peticiones · ${p.errors} errores</div>`
+        : `<div class="font-mono text-ink">${p.t}s · ${p.vus} VUs</div>` +
+          `<div class="mt-1 text-muted">p95 <span class="text-ink">${p.p95} ms</span></div>` +
+          `<div class="text-muted">median <span class="text-ink">${p.p50} ms</span></div>` +
+          `<div class="text-muted">${p.reqs} reqs · ${p.errors} errors</div>`;
     };
 
     const hide = () => {

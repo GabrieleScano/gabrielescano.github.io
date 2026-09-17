@@ -10,6 +10,10 @@ export interface DemoReport {
  * Browser-side entry point for the demo: turns the two text inputs into a
  * UserStory and runs the deterministic rule engine (the AI layer is
  * server-only and intentionally not part of the client demo).
+ *
+ * Blank lines are dropped rather than passed through: in a textarea an empty
+ * line is formatting, not the unfilled placeholder that the CLI's empty-
+ * criterion rule is there to catch in a story JSON file.
  */
 export function analyze(story: string, criteriaText: string): DemoReport {
   const acceptanceCriteria = criteriaText
@@ -25,5 +29,8 @@ export function analyze(story: string, criteriaText: string): DemoReport {
   };
 
   const findings = runRuleChecks(userStory);
-  return { findings, clarityScore: scoreClarity(findings) };
+  return {
+    findings,
+    clarityScore: scoreClarity(findings, acceptanceCriteria.length),
+  };
 }

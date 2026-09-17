@@ -77,8 +77,8 @@ test.describe('Live demo', () => {
     const score = page.locator('#reqcheck-score');
 
     // The flawed example is server-rendered and analysed on load.
-    await expect(score).toHaveText('55');
-    await expect(page.locator('#reqcheck-findings li')).toHaveCount(6);
+    await expect(score).toHaveText('69');
+    await expect(page.locator('#reqcheck-findings li')).toHaveCount(7);
 
     await page.getByRole('button', { name: 'Clean story' }).click();
     await expect(score).toHaveText('100');

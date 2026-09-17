@@ -21,7 +21,7 @@ export const ui = {
     'nav.language': 'Switch to Spanish',
 
     'hero.title.line1': "I'm Gabriele.",
-    'hero.title.line2': 'QA Engineer & Analyst.',
+    'hero.title.line2': 'QA Engineer & Functional Analyst.',
     'hero.lead.pre':
       'I clarify requirements, prevent defects early, and create test automation teams can trust. Less about counting bugs, more about ',
     'hero.lead.em': 'why',

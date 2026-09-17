@@ -131,7 +131,7 @@ export const ui = {
     'nav.language': 'Switch to English',
 
     'hero.title.line1': 'Soy Gabriele.',
-    'hero.title.line2': 'QA Engineer y Analista.',
+    'hero.title.line2': 'QA Engineer y Analista Funcional.',
     'hero.lead.pre':
       'Clarifico requisitos, prevengo defectos desde el principio y creo automatización de pruebas en la que los equipos pueden confiar. Menos contar bugs, más entender ',
     'hero.lead.em': 'por qué',

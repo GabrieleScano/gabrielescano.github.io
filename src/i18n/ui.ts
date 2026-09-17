@@ -20,11 +20,10 @@ export const ui = {
     'nav.connect': 'Connect',
     'nav.language': 'Switch to Spanish',
 
-    'hero.eyebrow': 'QA Engineer · Functional Analyst · Barcelona',
-    'hero.title.line1': 'Quality starts',
-    'hero.title.line2': 'before the code.',
+    'hero.title.line1': "I'm Gabriele.",
+    'hero.title.line2': 'QA Engineer & Analyst.',
     'hero.lead.pre':
-      'I clarify requirements, prevent defects early, and build test automation teams can trust. Less about counting bugs more about ',
+      'I clarify requirements, prevent defects early, and create test automation teams can trust. Less about counting bugs, more about ',
     'hero.lead.em': 'why',
     'hero.lead.post': ' they happen.',
     'hero.cta.projects': 'View projects',
@@ -131,11 +130,10 @@ export const ui = {
     'nav.connect': 'Contacto',
     'nav.language': 'Switch to English',
 
-    'hero.eyebrow': 'QA Engineer · Analista Funcional · Barcelona',
-    'hero.title.line1': 'La calidad empieza',
-    'hero.title.line2': 'antes del código.',
+    'hero.title.line1': 'Soy Gabriele.',
+    'hero.title.line2': 'QA Engineer y Analista.',
     'hero.lead.pre':
-      'Clarifico requisitos, prevengo defectos desde el principio y construyo automatización de pruebas en la que los equipos pueden confiar. Menos contar bugs, más entender ',
+      'Clarifico requisitos, prevengo defectos desde el principio y creo automatización de pruebas en la que los equipos pueden confiar. Menos contar bugs, más entender ',
     'hero.lead.em': 'por qué',
     'hero.lead.post': ' ocurren.',
     'hero.cta.projects': 'Ver proyectos',

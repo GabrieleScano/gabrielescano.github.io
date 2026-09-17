@@ -4,7 +4,7 @@ test.describe('Home', () => {
   test('loads the hero and four featured projects', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toContainText(
-      'Quality starts',
+      "I'm Gabriele",
     );
     await expect(page.locator('#projects article')).toHaveCount(4);
   });

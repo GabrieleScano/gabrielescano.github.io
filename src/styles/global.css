@@ -2,22 +2,23 @@
 @plugin "@tailwindcss/typography";
 
 /*
- * Design tokens — editorial base with a "test-runner" green signature.
+ * Design tokens — warm editorial base (brown-tinted neutrals rather than
+ * blue-greys) with an olive "test-runner" green signature.
  * Exposed as Tailwind v4 theme variables so they generate utilities
  * (bg-bg, text-ink, text-accent, font-display, …).
  */
 @theme {
   /* Surfaces & ink */
-  --color-bg: #fbfbf9;
-  --color-surface: #ffffff;
-  --color-ink: #15171c;
-  --color-muted: #5b6068;
-  --color-line: #e7e6e0;
+  --color-bg: #fbf9f4;
+  --color-surface: #fffdf9;
+  --color-ink: #1c1917;
+  --color-muted: #615a52;
+  --color-line: #e9e3d8;
 
-  /* Pass-green accent (AA contrast on the light background) */
-  --color-accent: #15803d;
-  --color-accent-strong: #166534;
-  --color-accent-soft: #e7f6ec;
+  /* Olive pass-green accent (AA contrast on the light background) */
+  --color-accent: #4a7218;
+  --color-accent-strong: #3a5a12;
+  --color-accent-soft: #eef3dc;
   /* Text color that sits on an accent-colored background. */
   --color-accent-ink: #ffffff;
 
@@ -25,7 +26,7 @@
      above the WCAG AA 4.5:1 contrast ratio on their tinted backgrounds. */
   --color-high: #991b1b;
   --color-medium: #92400e;
-  --color-low: #4b5563;
+  --color-low: #57534e;
 
   /* Typography */
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -48,20 +49,20 @@
 html[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-bg: #0f1117;
-  --color-surface: #171a22;
-  --color-ink: #e7e8ec;
-  --color-muted: #99a0ac;
-  --color-line: #2a2f3a;
+  --color-bg: #161412;
+  --color-surface: #1f1c19;
+  --color-ink: #ece8e1;
+  --color-muted: #aaa298;
+  --color-line: #36312a;
 
-  --color-accent: #4ade80;
-  --color-accent-strong: #22c55e;
-  --color-accent-soft: #14271b;
-  --color-accent-ink: #06140c;
+  --color-accent: #a5d46a;
+  --color-accent-strong: #8cc152;
+  --color-accent-soft: #222b16;
+  --color-accent-ink: #101a06;
 
   --color-high: #f87171;
   --color-medium: #fbbf24;
-  --color-low: #9aa3af;
+  --color-low: #aaa39b;
 }
 
 html {

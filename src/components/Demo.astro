@@ -165,7 +165,10 @@ const initialCriteria = [
   const NO_ISSUES = isEs
     ? 'No se detectaron problemas — los criterios parecen claros y verificables.'
     : 'No issues detected — criteria look clear and testable.';
-  const findingWord = (count: number) =>
+  const EMPTY_STATE = isEs
+    ? 'Pega una historia de usuario y sus criterios para analizarlos.'
+    : 'Paste a user story and its criteria to analyse them.';
+  const findingWord =(count: number) =>
     isEs
       ? `${count} hallazgo${count === 1 ? '' : 's'}`
       : `${count} finding${count === 1 ? '' : 's'}`;
@@ -223,6 +226,17 @@ const initialCriteria = [
   }
 
   function render(): void {
+    // Nothing typed yet: there is no requirement to score.
+    if (storyEl.value.trim() === '' && criteriaEl.value.trim() === '') {
+      scoreEl.textContent = '--';
+      scoreEl.style.color = 'var(--color-low)';
+      labelEl.textContent = '';
+      meterEl.style.width = '0%';
+      summaryEl.textContent = EMPTY_STATE;
+      findingsEl.replaceChildren();
+      return;
+    }
+
     const { findings, clarityScore } = analyze(storyEl.value, criteriaEl.value);
     const tone = toneFor(clarityScore);
 

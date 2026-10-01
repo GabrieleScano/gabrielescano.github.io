@@ -77,11 +77,38 @@ test.describe('Live demo', () => {
     const score = page.locator('#reqcheck-score');
 
     // The flawed example is server-rendered and analysed on load.
-    await expect(score).toHaveText('69');
+    await expect(score).toHaveText('65');
     await expect(page.locator('#reqcheck-findings li')).toHaveCount(7);
 
     await page.getByRole('button', { name: 'Clean story' }).click();
     await expect(score).toHaveText('100');
+    await expect(page.locator('#reqcheck-findings li')).toHaveCount(0);
+  });
+
+  test('shows no score for empty input and caps a story without criteria', async ({
+    page,
+  }) => {
+    await page.goto('/demo');
+    const score = page.locator('#reqcheck-score');
+
+    await page.getByRole('button', { name: 'Clear', exact: true }).click();
+    await expect(score).toHaveText('--');
+    await expect(page.locator('#reqcheck-findings li')).toHaveCount(0);
+
+    await page.locator('#story').fill('As a user, I want to log in so that I can access my account.');
+    await expect(score).toHaveText('40');
+    await expect(page.locator('#reqcheck-score-label')).toHaveText('Unclear');
+  });
+
+  test('reads Gherkin written one step per line as a single criterion', async ({
+    page,
+  }) => {
+    await page.goto('/demo');
+    await page.getByRole('button', { name: 'Clean story' }).click();
+    await page
+      .locator('#criteria')
+      .fill('Given an invalid password\nWhen I submit\nThen an error is displayed');
+    await expect(page.locator('#reqcheck-score')).toHaveText('100');
     await expect(page.locator('#reqcheck-findings li')).toHaveCount(0);
   });
 });

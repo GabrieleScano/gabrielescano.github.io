@@ -1,5 +1,7 @@
 ---
 import { getLang, useTranslations } from '../i18n/utils';
+import { analyze } from '../lib/reqcheck/analyze';
+import { demoCopy, toneFor, tint, SEVERITY_COLOR, FINDING_CLASSES as C } from './demoPresentation';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -14,6 +16,12 @@ const initialCriteria = [
   'When I type a query, then matching products are shown.',
   'Results should handle a large number of products efficiently.',
 ].join('\n');
+
+// Analyse it at build time too, so the results arrive in the HTML instead of
+// popping in (and the meter animating from 0) once the script runs.
+const initial = analyze(initialStory, initialCriteria);
+const copy = demoCopy(lang);
+const tone = toneFor(initial.clarityScore, lang);
 ---
 
 <section class="grid gap-8 lg:grid-cols-2">
@@ -68,28 +76,48 @@ const initialCriteria = [
           {t('demo.widget.clarityScore')}
         </p>
         <p class="mt-1 font-display text-5xl font-semibold tracking-tight">
-          <span id="reqcheck-score" style="color: var(--color-low)">--</span>
+          <span id="reqcheck-score" style={`color: ${tone.color}`}>{initial.clarityScore}</span>
           <span class="text-2xl text-muted">/100</span>
         </p>
       </div>
       <span
         id="reqcheck-score-label"
         class="rounded-full px-3 py-1 font-mono text-xs"
-        style="color: var(--color-low); background: color-mix(in srgb, var(--color-low) 12%, var(--color-surface))"
-      ></span>
+        style={`color: ${tone.color}; background: ${tint(tone.color)}`}
+      >{tone.label}</span>
     </div>
 
     <div class="mt-4 h-2 overflow-hidden rounded-full bg-line">
       <div
         id="reqcheck-meter"
         class="h-full rounded-full transition-[width,background-color] duration-500"
-        style="width: 0%; background-color: var(--color-low)"
+        style={`width: ${initial.clarityScore}%; background-color: ${tone.color}`}
       >
       </div>
     </div>
 
-    <p id="reqcheck-summary" class="mt-6 font-mono text-sm text-muted"></p>
-    <ul id="reqcheck-findings" class="mt-4 space-y-3"></ul>
+    <p id="reqcheck-summary" class="mt-6 font-mono text-sm text-muted">
+      {initial.findings.length ? copy.findings(initial.findings.length) : copy.noIssues}
+    </p>
+    <ul id="reqcheck-findings" class="mt-4 space-y-3">
+      {
+        initial.findings.map((f) => (
+          <li class={C.item}>
+            <span
+              class={C.pill}
+              style={`color: ${SEVERITY_COLOR[f.severity]}; background: ${tint(SEVERITY_COLOR[f.severity])}`}
+            >
+              {copy.severity[f.severity]}
+            </span>
+            <div class={C.body}>
+              <p class={C.category}>{f.category}</p>
+              <p class={C.message}>{f.message}</p>
+              {f.criterion && <p class={C.criterion}>"{f.criterion}"</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
@@ -127,7 +155,8 @@ const initialCriteria = [
 
 <script>
   import { analyze } from '../lib/reqcheck/analyze';
-  import type { Finding, Severity } from '../lib/reqcheck/types';
+  import type { Finding } from '../lib/reqcheck/types';
+  import { demoCopy, toneFor, tint, SEVERITY_COLOR, FINDING_CLASSES as C } from './demoPresentation';
 
   const EXAMPLES: Record<'flawed' | 'clean', { story: string; criteria: string }> = {
     flawed: {
@@ -150,28 +179,8 @@ const initialCriteria = [
     },
   };
 
-  const SEVERITY_COLOR: Record<Severity, string> = {
-    high: 'var(--color-high)',
-    medium: 'var(--color-medium)',
-    low: 'var(--color-low)',
-  };
-  const isEs = document.documentElement.lang === 'es';
-  const SEVERITY_LABEL: Record<Severity, string> = isEs
-    ? { high: 'ALTO', medium: 'MED', low: 'BAJO' }
-    : { high: 'HIGH', medium: 'MED', low: 'LOW' };
-  const TONE_LABEL = isEs
-    ? { clear: 'Claro', needsWork: 'Necesita trabajo', unclear: 'Poco claro' }
-    : { clear: 'Clear', needsWork: 'Needs work', unclear: 'Unclear' };
-  const NO_ISSUES = isEs
-    ? 'No se detectaron problemas — los criterios parecen claros y verificables.'
-    : 'No issues detected — criteria look clear and testable.';
-  const EMPTY_STATE = isEs
-    ? 'Pega una historia de usuario y sus criterios para analizarlos.'
-    : 'Paste a user story and its criteria to analyse them.';
-  const findingWord =(count: number) =>
-    isEs
-      ? `${count} hallazgo${count === 1 ? '' : 's'}`
-      : `${count} finding${count === 1 ? '' : 's'}`;
+  const lang = document.documentElement.lang === 'es' ? 'es' : 'en';
+  const copy = demoCopy(lang);
 
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -183,43 +192,21 @@ const initialCriteria = [
   const summaryEl = $('reqcheck-summary');
   const findingsEl = $('reqcheck-findings');
 
-  function toneFor(score: number): { color: string; label: string } {
-    if (score >= 80) return { color: 'var(--color-accent)', label: TONE_LABEL.clear };
-    if (score >= 50) return { color: 'var(--color-medium)', label: TONE_LABEL.needsWork };
-    return { color: 'var(--color-high)', label: TONE_LABEL.unclear };
-  }
-
   function findingCard(f: Finding): HTMLLIElement {
-    const li = document.createElement('li');
-    li.className =
-      'flex gap-3 rounded-xl border border-line bg-bg/40 p-3.5 text-sm';
-
-    const pill = document.createElement('span');
-    pill.className =
-      'mt-0.5 h-fit shrink-0 rounded-md px-2 py-0.5 font-mono text-[0.65rem] font-semibold';
-    pill.textContent = SEVERITY_LABEL[f.severity];
+    const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text: string) => {
+      const node = document.createElement(tag);
+      node.className = className;
+      node.textContent = text;
+      return node;
+    };
+    const li = el('li', C.item, '');
+    const pill = el('span', C.pill, copy.severity[f.severity]);
     pill.style.color = SEVERITY_COLOR[f.severity];
-    pill.style.background = `color-mix(in srgb, ${SEVERITY_COLOR[f.severity]} 12%, var(--color-surface))`;
+    pill.style.background = tint(SEVERITY_COLOR[f.severity]);
 
-    const body = document.createElement('div');
-    body.className = 'min-w-0';
-
-    const cat = document.createElement('p');
-    cat.className = 'font-mono text-xs text-muted';
-    cat.textContent = f.category;
-
-    const msg = document.createElement('p');
-    msg.className = 'mt-0.5 text-ink/85';
-    msg.textContent = f.message;
-
-    body.append(cat, msg);
-
-    if (f.criterion) {
-      const crit = document.createElement('p');
-      crit.className = 'mt-1.5 border-l-2 border-line pl-3 italic text-muted';
-      crit.textContent = `"${f.criterion}"`;
-      body.append(crit);
-    }
+    const body = el('div', C.body, '');
+    body.append(el('p', C.category, f.category), el('p', C.message, f.message));
+    if (f.criterion) body.append(el('p', C.criterion, `"${f.criterion}"`));
 
     li.append(pill, body);
     return li;
@@ -232,30 +219,30 @@ const initialCriteria = [
       scoreEl.style.color = 'var(--color-low)';
       labelEl.textContent = '';
       meterEl.style.width = '0%';
-      summaryEl.textContent = EMPTY_STATE;
+      summaryEl.textContent = copy.empty;
       findingsEl.replaceChildren();
       return;
     }
 
     const { findings, clarityScore } = analyze(storyEl.value, criteriaEl.value);
-    const tone = toneFor(clarityScore);
+    const tone = toneFor(clarityScore, lang);
 
     scoreEl.textContent = String(clarityScore);
     scoreEl.style.color = tone.color;
     labelEl.textContent = tone.label;
     labelEl.style.color = tone.color;
-    labelEl.style.background = `color-mix(in srgb, ${tone.color} 12%, var(--color-surface))`;
+    labelEl.style.background = tint(tone.color);
     meterEl.style.width = `${clarityScore}%`;
     meterEl.style.backgroundColor = tone.color;
 
     findingsEl.replaceChildren();
 
     if (findings.length === 0) {
-      summaryEl.textContent = NO_ISSUES;
+      summaryEl.textContent = copy.noIssues;
       return;
     }
 
-    summaryEl.textContent = findingWord(findings.length);
+    summaryEl.textContent = copy.findings(findings.length);
     for (const f of findings) findingsEl.append(findingCard(f));
   }
 
@@ -282,6 +269,5 @@ const initialCriteria = [
     });
   }
 
-  // Initial analysis of the server-rendered example.
-  render();
+  // The initial example is already analysed in the server-rendered HTML.
 </script>

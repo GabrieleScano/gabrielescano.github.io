@@ -113,6 +113,17 @@ test.describe('Load chart', () => {
 });
 
 test.describe('Live demo', () => {
+  test('ships the initial analysis in the HTML (no JavaScript needed)', async ({ browser }) => {
+    // Rendering it client-side made the results pop in late and hurt
+    // Lighthouse's Speed Index on slower CI machines.
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await page.goto('/demo');
+    await expect(page.locator('#reqcheck-score')).toHaveText('65');
+    await expect(page.locator('#reqcheck-findings li')).toHaveCount(7);
+    await context.close();
+  });
+
   test('analyses the flawed example and updates on the clean one', async ({
     page,
   }) => {

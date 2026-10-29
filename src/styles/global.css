@@ -154,6 +154,8 @@ body {
   position: absolute;
   inset: 0;
   z-index: -10;
+  /* Clip here rather than on the hero, so the contact menu can overflow it. */
+  overflow: hidden;
   pointer-events: none;
   opacity: 0.55;
   mix-blend-mode: multiply;

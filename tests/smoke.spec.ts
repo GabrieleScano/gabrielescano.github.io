@@ -9,6 +9,49 @@ test.describe('Home', () => {
     await expect(page.locator('#projects article')).toHaveCount(4);
   });
 
+  test("opens the Let's talk menu with the contact options", async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.locator('main').getByRole('button', { name: "Let's talk" });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    const panel = page.locator(`#${await trigger.getAttribute('aria-controls')}`);
+    await expect(panel.getByRole('link', { name: 'Write me an email' })).toHaveAttribute(
+      'href',
+      'mailto:gabrielescano.bcn@gmail.com',
+    );
+    await expect(panel.getByRole('button', { name: 'Copy email address' })).toBeVisible();
+    await expect(panel.getByRole('link', { name: 'LinkedIn' })).toBeVisible();
+    await expect(panel.getByRole('link', { name: 'GitHub' })).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(panel).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+
+  test('copies the email address from the contact menu', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/');
+    await page.locator('main').getByRole('button', { name: "Let's talk" }).click();
+    await page.getByRole('button', { name: 'Copy email address' }).click();
+    await expect(page.getByRole('button', { name: 'Copied ✓' })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      'gabrielescano.bcn@gmail.com',
+    );
+  });
+
+  test('lists the contact links in the footer of inner pages', async ({ page }) => {
+    await page.goto('/projects/ai-augmented-e2e/');
+    const footer = page.locator('footer');
+    await expect(footer.getByRole('link', { name: 'gabrielescano.bcn@gmail.com' })).toHaveAttribute(
+      'href',
+      'mailto:gabrielescano.bcn@gmail.com',
+    );
+    await expect(footer.getByRole('link', { name: 'LinkedIn' })).toBeVisible();
+    await expect(footer.getByRole('link', { name: 'GitHub' })).toBeVisible();
+  });
+
   test('exposes the live-demo link in the nav', async ({ page }) => {
     await page.goto('/');
     await expect(

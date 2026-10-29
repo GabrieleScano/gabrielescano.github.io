@@ -17,7 +17,8 @@ const links = [
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-line/70 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/60"
+  id="site-header"
+  class="sticky top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-300 border-line/70 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/60"
 >
   <div
     class="mx-auto flex max-w-5xl items-center justify-between px-[var(--spacing-gutter)] py-4"
@@ -45,7 +46,7 @@ const links = [
         <li class="hidden sm:block">
           <a
             href="https://linkedin.com/in/gabrielescano"
-            class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+            class="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-accent hover:text-accent"
             target="_blank"
             rel="me noopener"
             aria-label={t('nav.linkedin')}
@@ -58,7 +59,7 @@ const links = [
         <li class="hidden sm:block">
           <a
             href="https://github.com/GabrieleScano"
-            class="rounded-full border border-line px-4 py-1.5 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+            class="rounded-full border border-line bg-surface px-4 py-1.5 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
             target="_blank"
             rel="me noopener"
           >
@@ -68,7 +69,7 @@ const links = [
         <li class="hidden sm:block">
           <a
             href={langSwitchHref}
-            class="flex h-9 items-center justify-center rounded-full border border-line px-3 font-mono text-xs uppercase text-muted transition-colors hover:border-accent hover:text-accent"
+            class="flex h-9 items-center justify-center rounded-full border border-line bg-surface px-3 font-mono text-xs uppercase text-muted transition-colors hover:border-accent hover:text-accent"
             aria-label={t('nav.language')}
           >
             {otherLang}
@@ -78,7 +79,7 @@ const links = [
           <button
             id="theme-toggle"
             type="button"
-            class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+            class="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-accent hover:text-accent"
             aria-label={t('nav.theme')}
           >
             <svg class="icon-sun h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -94,7 +95,7 @@ const links = [
           <button
             id="mobile-menu-toggle"
             type="button"
-            class="flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-accent hover:text-accent"
+            class="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-accent hover:text-accent"
             aria-label={t('nav.menu')}
             aria-expanded="false"
             aria-controls="mobile-nav"
@@ -205,6 +206,15 @@ const links = [
 </style>
 
 <script>
+  // On pages whose hero slides under the header, keep the header see-through
+  // while the page is scrolled to the very top.
+  const header = document.getElementById('site-header');
+  if (header && document.querySelector('[data-hero-under-header]')) {
+    const syncTop = () => header.toggleAttribute('data-over-hero', window.scrollY < 8);
+    syncTop();
+    window.addEventListener('scroll', syncTop, { passive: true });
+  }
+
   const btn = document.getElementById('theme-toggle');
   const root = document.documentElement;
   const sync = () => btn?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));

@@ -139,3 +139,115 @@ body {
   mask-image: radial-gradient(ellipse 70% 60% at 70% 40%, #000 30%, transparent 75%);
   opacity: 0.7;
 }
+
+/*
+ * Hero backdrop: olive halftone close-up of my face. A dot grid is screened over a
+ * grayscale crop, then contrast is cranked so the dots swell in the shadows.
+ * Source photo is 480px square with the eyes around (245, 187); the crop is
+ * centred vertically (50% of the leftover height, nudged so the face sits mid-hero),
+ * anchored to the right edge so eyes and mouth sit beside the lead, clear of the text.
+ * Left of the photo, a mid-grey gradient carries the dot texture across the
+ * whole hero (dots stay tiny behind the text); only the head is kept, and a
+ * shadow projects from behind it towards the left to balance the face.
+ */
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(to bottom, #000 85%, transparent);
+}
+.hero-photo-img {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  filter: contrast(6);
+}
+.hero-photo-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #000 0, #fff 3.5px) 0 0 / 5px 5px;
+  mix-blend-mode: screen;
+}
+.hero-photo-src {
+  position: absolute;
+  inset: 0;
+  --hero-clearing: #767676;
+  /* Under the photo: a shadow cast from behind the face, stretching left and
+     thinning out towards the edge, over the mid-grey fill. */
+  background:
+    /* A clearing behind the text block keeps the dots there tiny. */
+    radial-gradient(
+      ellipse 620px 260px at 40% 54%,
+      var(--hero-clearing) 45%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 1150px 330px at calc(100% - 240px) 46%,
+      #2a2a2a,
+      rgb(42 42 42 / 0.7) 35%,
+      rgb(42 42 42 / 0) 100%
+    ),
+    linear-gradient(to right, #5a5a5a, #7c7c7c 30%, #7a7a7a 70%, #6c6c6c);
+  filter: grayscale(1) brightness(1.05) contrast(1.35);
+}
+/* The photo covers the last 607px (its right edge overflows by 543px). An
+   elliptical mask keeps only the head: the shirt and the photo's left edge
+   dissolve into the shadow and fill underneath. */
+.hero-photo-src::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/gabriele-scano.jpg') no-repeat right -543px top calc(50% + 13px) / 1150px auto;
+  mask-image: radial-gradient(
+    ellipse 380px 520px at calc(100% - 100px) 44%,
+    #000 64%,
+    transparent 100%
+  );
+}
+/* Recolours the black dots in the accent olive; white stays white. A pseudo-
+   element rather than a div, so axe doesn't read it as the text's background. */
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-accent);
+  mix-blend-mode: lighten;
+}
+/* Dark theme: invert so the dots come out light on the dark background,
+   then darken them to the (lighter) dark-theme accent. */
+html[data-theme='dark'] .hero-photo {
+  mix-blend-mode: screen;
+  opacity: 0.35;
+}
+html[data-theme='dark'] .hero-photo::after {
+  mix-blend-mode: darken;
+}
+/* Invert the source too, so the light dots follow the face's highlights
+   (a positive image) rather than its shadows. */
+html[data-theme='dark'] .hero-photo-src {
+  /* The source is inverted here, so the clearing has to be darker, not lighter. */
+  --hero-clearing: #555;
+  filter: grayscale(1) brightness(1.05) contrast(1.35) invert(1);
+}
+html[data-theme='dark'] .hero-photo-img {
+  filter: contrast(6) invert(1);
+}
+/* Desktop, scrolled to the top: the header turns see-through so the photo
+   shows behind it (toggled by the script in Header.astro). */
+@media (min-width: 1024px) {
+  #site-header[data-over-hero] {
+    background-color: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+  }
+}
+/* Below the lg breakpoint the eyes would sit behind the lead text. */
+@media (max-width: 1023px) {
+  .hero-photo {
+    display: none;
+  }
+}

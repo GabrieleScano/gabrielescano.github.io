@@ -50,14 +50,18 @@ const timeline = [
   <Header />
 
   <main id="main">
-    <!-- Hero: single column, intro + key numbers -->
-    <section class="relative isolate overflow-hidden">
-      <div
-        class="hero-grid pointer-events-none absolute inset-0 -z-10"
-        aria-hidden="true"
-      >
+    <!-- Hero: single column over a halftone close-up of my face. On desktop it
+         fills the viewport and slides under the translucent sticky header (69px),
+         so the top of the photo shows through it. -->
+    <section
+      data-hero-under-header
+      class="relative isolate overflow-hidden lg:-mt-[69px] lg:flex lg:min-h-svh lg:items-center lg:pt-[69px]">
+      <div class="hero-photo" aria-hidden="true">
+        <div class="hero-photo-img">
+          <div class="hero-photo-src"></div>
+        </div>
       </div>
-      <div class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-14 pt-12 sm:pt-16 lg:pb-20 lg:pt-24">
+      <div class="mx-auto w-full max-w-5xl px-[var(--spacing-gutter)] pb-14 pt-12 sm:pt-16 lg:py-16">
         <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs text-muted">
           <span class="relative flex h-2 w-2" aria-hidden="true">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>

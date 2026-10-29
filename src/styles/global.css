@@ -237,9 +237,17 @@ html[data-theme='dark'] .hero-photo-img {
     backdrop-filter: none;
   }
 }
-/* Below the lg breakpoint the eyes would sit behind the lead text. */
+/* Below the lg breakpoint the hero is shorter and the text spans the full
+   width, so the portrait shrinks to a half face in the top-right corner,
+   fading out above the lead so the text over it stays readable. */
 @media (max-width: 1023px) {
-  .hero-photo {
-    display: none;
+  .hero-photo-src::before {
+    background-size: 640px auto;
+    background-position: right -290px top -110px;
+    mask-image: radial-gradient(
+      ellipse 200px 200px at calc(100% - 50px) 130px,
+      #000 55%,
+      transparent 100%
+    );
   }
 }

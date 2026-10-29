@@ -8,7 +8,7 @@ export const ui = {
 
     'home.page.title': 'Gabriele Scano — QA Engineer',
     'home.page.description':
-      'QA Engineer & Functional Analyst in Barcelona. Test automation with Playwright + TypeScript, shift-left functional analysis, and AI-augmented QA.',
+      'QA Engineer in Barcelona. Test automation with Playwright + TypeScript, shift-left functional analysis, and AI-augmented QA.',
 
     'nav.projects': 'Projects',
     'nav.demo': 'Live demo',
@@ -120,7 +120,7 @@ export const ui = {
 
     'home.page.title': 'Gabriele Scano — QA Engineer',
     'home.page.description':
-      'QA Engineer y Analista Funcional en Barcelona. Automatización de tests con Playwright + TypeScript, análisis funcional shift-left e IA aplicada al QA.',
+      'QA Engineer en Barcelona. Automatización de tests con Playwright + TypeScript, análisis funcional shift-left e IA aplicada al QA.',
 
     'nav.projects': 'Proyectos',
     'nav.demo': 'Demo en vivo',

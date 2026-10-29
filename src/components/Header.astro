@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 import { getLang, useTranslations, localeBase, switchLocalePath } from '../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -25,8 +26,9 @@ const links = [
   >
     <a
       href={`${base}/`}
-      class="font-display text-base font-semibold tracking-tight text-ink"
+      class="inline-flex items-center gap-2.5 font-display text-base font-semibold tracking-tight text-ink"
     >
+      <Logo class="h-6 w-6" />
       Gabriele Scano
     </a>
     <nav aria-label="Primary">

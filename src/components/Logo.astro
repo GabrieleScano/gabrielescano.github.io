@@ -1,0 +1,13 @@
+---
+/** Halftone-dot mark (see src/lib/logoDots.ts), drawn in the accent colour. */
+import { logoDots } from '../lib/logoDots';
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg viewBox="0 0 32 32" class:list={['shrink-0 fill-accent', className]} aria-hidden="true">
+  {logoDots().map((d) => <circle cx={d.cx} cy={d.cy} r={d.r} />)}
+</svg>

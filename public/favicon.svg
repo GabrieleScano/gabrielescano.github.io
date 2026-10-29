@@ -1,11 +1,73 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#1c1917" />
-  <path
-    d="M9 16.5 14 21.5 23 10.5"
-    fill="none"
-    stroke="#a5d46a"
-    stroke-width="3"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+  <!-- Halftone-dot mark; generated from src/lib/logoDots.ts. -->
+  <style>
+    g { fill: #4a7218; }
+    @media (prefers-color-scheme: dark) { g { fill: #a5d46a; } }
+  </style>
+  <g>
+    <circle cx="2" cy="2" r="0.3" />
+    <circle cx="6" cy="2" r="0.3" />
+    <circle cx="10" cy="2" r="0.3" />
+    <circle cx="14" cy="2" r="0.3" />
+    <circle cx="18" cy="2" r="0.39" />
+    <circle cx="22" cy="2" r="0.39" />
+    <circle cx="26" cy="2" r="0.3" />
+    <circle cx="30" cy="2" r="0.3" />
+    <circle cx="2" cy="6" r="0.3" />
+    <circle cx="6" cy="6" r="0.3" />
+    <circle cx="10" cy="6" r="0.48" />
+    <circle cx="14" cy="6" r="0.68" />
+    <circle cx="18" cy="6" r="0.79" />
+    <circle cx="22" cy="6" r="0.79" />
+    <circle cx="26" cy="6" r="0.68" />
+    <circle cx="30" cy="6" r="0.48" />
+    <circle cx="2" cy="10" r="0.3" />
+    <circle cx="6" cy="10" r="0.48" />
+    <circle cx="10" cy="10" r="0.79" />
+    <circle cx="14" cy="10" r="1.03" />
+    <circle cx="18" cy="10" r="1.18" />
+    <circle cx="22" cy="10" r="1.18" />
+    <circle cx="26" cy="10" r="1.03" />
+    <circle cx="30" cy="10" r="0.79" />
+    <circle cx="2" cy="14" r="0.3" />
+    <circle cx="6" cy="14" r="0.68" />
+    <circle cx="10" cy="14" r="1.03" />
+    <circle cx="14" cy="14" r="1.35" />
+    <circle cx="18" cy="14" r="1.57" />
+    <circle cx="22" cy="14" r="1.57" />
+    <circle cx="26" cy="14" r="1.35" />
+    <circle cx="30" cy="14" r="1.03" />
+    <circle cx="2" cy="18" r="0.39" />
+    <circle cx="6" cy="18" r="0.79" />
+    <circle cx="10" cy="18" r="1.18" />
+    <circle cx="14" cy="18" r="1.57" />
+    <circle cx="18" cy="18" r="1.92" />
+    <circle cx="22" cy="18" r="1.92" />
+    <circle cx="26" cy="18" r="1.57" />
+    <circle cx="30" cy="18" r="1.18" />
+    <circle cx="2" cy="22" r="0.39" />
+    <circle cx="6" cy="22" r="0.79" />
+    <circle cx="10" cy="22" r="1.18" />
+    <circle cx="14" cy="22" r="1.57" />
+    <circle cx="18" cy="22" r="1.92" />
+    <circle cx="22" cy="22" r="1.92" />
+    <circle cx="26" cy="22" r="1.57" />
+    <circle cx="30" cy="22" r="1.18" />
+    <circle cx="2" cy="26" r="0.3" />
+    <circle cx="6" cy="26" r="0.68" />
+    <circle cx="10" cy="26" r="1.03" />
+    <circle cx="14" cy="26" r="1.35" />
+    <circle cx="18" cy="26" r="1.57" />
+    <circle cx="22" cy="26" r="1.57" />
+    <circle cx="26" cy="26" r="1.35" />
+    <circle cx="30" cy="26" r="1.03" />
+    <circle cx="2" cy="30" r="0.3" />
+    <circle cx="6" cy="30" r="0.48" />
+    <circle cx="10" cy="30" r="0.79" />
+    <circle cx="14" cy="30" r="1.03" />
+    <circle cx="18" cy="30" r="1.18" />
+    <circle cx="22" cy="30" r="1.18" />
+    <circle cx="26" cy="30" r="1.03" />
+    <circle cx="30" cy="30" r="0.79" />
+  </g>
 </svg>

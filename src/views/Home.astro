@@ -63,18 +63,19 @@ const timeline = [
   <Header />
 
   <main id="main">
-    <!-- Hero: single column over a halftone close-up of my face. On desktop it
-         fills the viewport and slides under the translucent sticky header (69px),
-         so the top of the photo shows through it. -->
+    <!-- Hero: single column over a halftone close-up of my face. It fills the
+         viewport below the sticky header (69px, 81px on tablets where the nav
+         wraps); on desktop it slides under the translucent header so the top
+         of the photo shows through it. -->
     <section
       data-hero-under-header
-      class="relative isolate lg:-mt-[69px] lg:flex lg:min-h-svh lg:items-center lg:pt-[69px]">
+      class="relative isolate min-h-[calc(100svh-69px)] md:min-h-[calc(100svh-81px)] lg:-mt-[69px] lg:flex lg:min-h-svh lg:items-center lg:pt-[69px]">
       <div class="hero-photo" aria-hidden="true">
         <div class="hero-photo-img">
           <div class="hero-photo-src"></div>
         </div>
       </div>
-      <div class="mx-auto w-full max-w-6xl px-[var(--spacing-gutter)] pb-14 pt-12 sm:pt-16 lg:py-16">
+      <div class="mx-auto w-full max-w-6xl px-[var(--spacing-gutter)] pb-14 pt-44 lg:py-16">
         <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs text-muted">
           <span class="relative flex h-2 w-2" aria-hidden="true">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>

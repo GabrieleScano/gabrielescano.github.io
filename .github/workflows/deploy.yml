@@ -34,6 +34,9 @@ jobs:
         run: npx playwright test
       - name: Lighthouse budgets
         run: npm run lhci
+      - name: Lighthouse metrics (on failure)
+        if: failure()
+        run: node scripts/lhci-summary.mjs
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

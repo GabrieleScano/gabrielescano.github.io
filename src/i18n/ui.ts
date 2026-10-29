@@ -20,14 +20,15 @@ export const ui = {
     'nav.connect': 'Connect',
     'nav.language': 'Switch to Spanish',
 
-    'hero.title.line1': "I'm Gabriele.",
-    'hero.title.line2': 'QA Engineer & Functional Analyst.',
+    'hero.title.line1': "I'm Gabriele,",
+    'hero.title.line2': 'QA Engineer.',
     'hero.lead.pre':
       'I clarify requirements, prevent defects early, and create test automation teams can trust. Less about counting bugs, more about ',
     'hero.lead.em': 'why',
     'hero.lead.post': ' they happen.',
     'hero.cta.projects': 'View projects',
     'hero.cta.github': 'GitHub',
+    'hero.status': 'open to work',
 
     'projects.heading': 'Featured projects',
     'projects.subheading': 'Self-contained and runnable - clone, run, inspect end to end.',
@@ -56,6 +57,7 @@ export const ui = {
       'In 2018 I retrained as a developer at Factoría F5 and spent four years as a Frontend Developer at GFT Group. I moved into QA in 2023, leading the QA team at Basetis. I combine functional testing and automation (Playwright, TypeScript, API and load testing) with AI tools across the QA cycle, from requirements analysis to test generation and bug triage.',
     'about.p3':
       "At Basetis I also managed and coordinated the QA team, working in Agile, Scrum and Kanban environments. I hold a Master's in Cultural Management (Universitat de Barcelona) and a BA in Art History & Cultural Heritage (Università degli Studi di Cagliari), and I'm particularly drawn to projects with social impact.",
+    'about.more': 'Read more',
     'about.linkedin': 'Connect on LinkedIn',
     'about.timeline.1': 'QA Engineer - Basetis',
     'about.timeline.2': 'Frontend Developer - GFT Group',
@@ -130,14 +132,15 @@ export const ui = {
     'nav.connect': 'Contacto',
     'nav.language': 'Switch to English',
 
-    'hero.title.line1': 'Soy Gabriele.',
-    'hero.title.line2': 'QA Engineer y Analista Funcional.',
+    'hero.title.line1': 'Soy Gabriele,',
+    'hero.title.line2': 'QA Engineer.',
     'hero.lead.pre':
       'Clarifico requisitos, prevengo defectos desde el principio y creo automatización de pruebas en la que los equipos pueden confiar. Menos contar bugs, más entender ',
     'hero.lead.em': 'por qué',
     'hero.lead.post': ' ocurren.',
     'hero.cta.projects': 'Ver proyectos',
     'hero.cta.github': 'GitHub',
+    'hero.status': 'disponible',
 
     'projects.heading': 'Proyectos destacados',
     'projects.subheading': 'Autocontenidos y ejecutables: clona, ejecuta e inspecciona de principio a fin.',
@@ -166,6 +169,7 @@ export const ui = {
       'En 2018 me reciclé como desarrollador en Factoría F5 y pasé cuatro años como Frontend Developer en GFT Group. Di el salto a QA en 2023, liderando el equipo de QA en Basetis. Combino testing funcional y automatización (Playwright, TypeScript, testing de API y de carga) con herramientas de IA en todo el ciclo de QA, desde el análisis de requisitos hasta la generación de tests y el triage de bugs.',
     'about.p3':
       'En Basetis también gestioné y coordiné el equipo de QA, trabajando en entornos Agile, Scrum y Kanban. Tengo un Máster en Gestión Cultural (Universitat de Barcelona) y un grado en Historia del Arte y Patrimonio Cultural (Università degli Studi di Cagliari), y me atraen especialmente los proyectos con impacto social.',
+    'about.more': 'Leer más',
     'about.linkedin': 'Conectar en LinkedIn',
     'about.timeline.1': 'QA Engineer - Basetis',
     'about.timeline.2': 'Frontend Developer - GFT Group',

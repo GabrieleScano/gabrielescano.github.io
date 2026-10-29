@@ -4,7 +4,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import Check from '../components/Check.astro';
 import { getLang, useTranslations, localeBase } from '../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -15,8 +14,6 @@ const projects = (await getCollection('projects', ({ id }) => id.startsWith(`${l
   (a, b) => a.data.order - b.data.order,
 );
 const slug = (id: string) => id.split('/').slice(1).join('/');
-
-const totalTests = projects.reduce((sum, p) => sum + p.data.testCount, 0);
 
 const skills =
   lang === 'es'
@@ -53,41 +50,55 @@ const timeline = [
   <Header />
 
   <main id="main">
-    <!-- Hero -->
-    <section
-      class="mx-auto min-h-[85svh] max-w-5xl px-[var(--spacing-gutter)] pb-16 pt-10 sm:flex sm:min-h-[calc(100svh-4.5rem)] sm:flex-col sm:justify-center sm:pb-24 sm:pt-16"
-    >
-      <h1
-        class="max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl md:text-7xl"
+    <!-- Hero: single column, intro + key numbers -->
+    <section class="relative isolate overflow-hidden">
+      <div
+        class="hero-grid pointer-events-none absolute inset-0 -z-10"
+        aria-hidden="true"
       >
-        {t('hero.title.line1')}<br />{t('hero.title.line2')}
-      </h1>
+      </div>
+      <div class="mx-auto max-w-5xl px-[var(--spacing-gutter)] pb-14 pt-12 sm:pt-16 lg:pb-20 lg:pt-24">
+        <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs text-muted">
+          <span class="relative flex h-2 w-2" aria-hidden="true">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+          </span>
+          Barcelona · {t('hero.status')}
+        </p>
 
-      <p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
-        {t('hero.lead.pre')}<em class="text-ink not-italic">{t('hero.lead.em')}</em>{t('hero.lead.post')}
-      </p>
+        <h1
+          class="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl"
+        >
+          {t('hero.title.line1')}<br class="lg:hidden" />{' '}
+          <span class="text-muted">{t('hero.title.line2')}</span>
+        </h1>
 
-      <div class="mt-9 flex flex-wrap gap-3">
-        <a
-          href="#projects"
-          class="rounded-full bg-ink px-6 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
-        >
-          {t('hero.cta.projects')}
-        </a>
-        <a
-          href="https://github.com/GabrieleScano"
-          rel="me noopener"
-          class="rounded-full border border-line px-6 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
-        >
-          {t('hero.cta.github')}
-        </a>
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          {t('hero.lead.pre')}<em class="text-ink not-italic">{t('hero.lead.em')}</em>{t('hero.lead.post')}
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="#projects"
+            class="rounded-full bg-ink px-6 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+          >
+            {t('hero.cta.projects')}
+          </a>
+          <a
+            href="https://github.com/GabrieleScano"
+            rel="me noopener"
+            class="rounded-full border border-line px-6 py-2.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+          >
+            {t('hero.cta.github')}
+          </a>
+        </div>
       </div>
     </section>
 
     <!-- Projects -->
     <section
       id="projects"
-      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-12"
     >
       <div class="flex items-end justify-between gap-4">
         <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
@@ -98,15 +109,7 @@ const timeline = [
         </p>
       </div>
 
-      <div
-        class="mt-6 inline-flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-line bg-surface px-5 py-4"
-      >
-        <Check label={`${totalTests} ${t('projects.stat.tests')}`} />
-        <Check label={t('projects.stat.ci')} />
-        <Check label={t('projects.stat.coverage')} />
-      </div>
-
-      <div class="mt-10 grid gap-6">
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
         {
           projects.map((project, i) => (
             <ProjectCard
@@ -117,105 +120,94 @@ const timeline = [
               repo={project.data.repo}
               stack={project.data.stack}
               metrics={project.data.metrics}
-              highlights={project.data.highlights}
             />
           ))
         }
       </div>
     </section>
 
-    <!-- Approach -->
-    <section
-      id="approach"
-      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
-    >
-      <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
-        {t('approach.heading')}
-      </h2>
-      <div class="mt-10 grid gap-8 sm:grid-cols-3">
-        <div>
-          <h3 class="font-mono text-sm text-accent">{t('approach.shiftleft.title')}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink/80">
-            {t('approach.shiftleft.body')}
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-sm text-accent">{t('approach.automation.title')}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink/80">
-            {t('approach.automation.body')}
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-sm text-accent">{t('approach.ai.title')}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink/80">
-            {t('approach.ai.body')}
-          </p>
-        </div>
-      </div>
-
-      <ul class="mt-12 flex flex-wrap gap-2">
-        {
-          skills.map((skill) => (
-            <li class="rounded-full border border-line px-3.5 py-1.5 font-mono text-xs text-muted">
-              {skill}
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <!-- About -->
+    <!-- About + approach, side by side -->
     <section
       id="about"
-      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-16"
+      class="mx-auto max-w-5xl scroll-mt-20 px-[var(--spacing-gutter)] py-12"
     >
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <img
-            src="/gabriele-scano.jpg"
-            alt="Gabriele Scano"
-            width="80"
-            height="80"
-            class="h-16 w-16 rounded-2xl border border-line object-cover sm:h-20 sm:w-20"
-          />
-          <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
-            {t('about.heading')}
-          </h2>
-        </div>
-        <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
-          {t('about.subheading')}
-        </p>
-      </div>
+      <div class="grid gap-12 lg:grid-cols-[1.15fr_1fr]">
+        <div>
+          <div class="flex items-center gap-4">
+            <img
+              src="/gabriele-scano.jpg"
+              alt="Gabriele Scano"
+              width="64"
+              height="64"
+              loading="lazy"
+              class="h-14 w-14 rounded-2xl border border-line object-cover sm:h-16 sm:w-16"
+            />
+            <div>
+              <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+                {t('about.heading')}
+              </h2>
+              <p class="text-sm text-muted">{t('about.subheading')}</p>
+            </div>
+          </div>
 
-      <div class="mt-10 grid gap-10 sm:grid-cols-[1.2fr_1fr]">
-        <div class="space-y-4 text-base leading-relaxed text-ink/80">
-          <p>{t('about.p1')}</p>
-          <p>{t('about.p2')}</p>
-          <p>{t('about.p3')}</p>
-          <a
-            href="https://linkedin.com/in/gabrielescano"
-            target="_blank"
-            rel="me noopener"
-            class="inline-flex items-center gap-1.5 font-mono text-sm text-accent transition-opacity hover:opacity-80"
-          >
-            {t('about.linkedin')}
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-
-        <div
-          class="space-y-4 border-t border-line pt-6 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0"
-        >
-          {
-            timeline.map((item) => (
-              <div class="flex flex-col gap-1 sm:flex-row sm:gap-4">
-                <span class="shrink-0 font-mono text-xs text-accent sm:w-24">
-                  {item.period}
-                </span>
-                <span class="text-sm text-muted">{item.role}</span>
+          <div class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink/80">
+            <p>{t('about.p1')}</p>
+            <details class="group">
+              <summary
+                class="inline-flex cursor-pointer list-none items-center gap-1.5 font-mono text-sm text-accent transition-opacity hover:opacity-80 [&::-webkit-details-marker]:hidden"
+              >
+                {t('about.more')}
+                <span class="transition-transform group-open:rotate-90" aria-hidden="true">→</span>
+              </summary>
+              <div class="mt-4 space-y-4">
+                <p>{t('about.p2')}</p>
+                <p>{t('about.p3')}</p>
               </div>
-            ))
-          }
+            </details>
+          </div>
+
+          <ol class="mt-8 space-y-3 border-t border-line pt-6">
+            {
+              timeline.map((item) => (
+                <li class="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                  <span class="shrink-0 font-mono text-xs text-accent sm:w-24">
+                    {item.period}
+                  </span>
+                  <span class="text-sm text-muted">{item.role}</span>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+
+        <div id="approach" class="scroll-mt-20 rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <h2 class="font-display text-2xl font-semibold tracking-tight text-ink">
+            {t('approach.heading')}
+          </h2>
+          <dl class="mt-6 space-y-5">
+            <div>
+              <dt class="font-mono text-sm text-accent">{t('approach.shiftleft.title')}</dt>
+              <dd class="mt-1.5 text-sm leading-relaxed text-ink/80">{t('approach.shiftleft.body')}</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-sm text-accent">{t('approach.automation.title')}</dt>
+              <dd class="mt-1.5 text-sm leading-relaxed text-ink/80">{t('approach.automation.body')}</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-sm text-accent">{t('approach.ai.title')}</dt>
+              <dd class="mt-1.5 text-sm leading-relaxed text-ink/80">{t('approach.ai.body')}</dd>
+            </div>
+          </dl>
+
+          <ul class="mt-7 flex flex-wrap gap-2 border-t border-line pt-6">
+            {
+              skills.map((skill) => (
+                <li class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted">
+                  {skill}
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </section>

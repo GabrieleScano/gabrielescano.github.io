@@ -129,3 +129,13 @@ body {
 .skip-link:focus {
   top: 0.5rem;
 }
+
+/* Hero backdrop: faint graph-paper grid that fades out towards the edges. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 40%, #000 30%, transparent 75%);
+  opacity: 0.7;
+}

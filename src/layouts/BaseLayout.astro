@@ -3,6 +3,14 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+// Latin subsets of the three fonts, preloaded so they arrive with the HTML
+// instead of being discovered through the CSS. Otherwise text first paints
+// in the fallback font and reflows when the web font swaps in: invisible on
+// macOS (system fonts are close to Inter), but a big layout shift on Linux,
+// where the fallback is much wider.
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import groteskLatin from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import monoLatin from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
 import Analytics from '../components/Analytics.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import { getLang, useTranslations, switchLocalePath } from '../i18n/utils';
@@ -42,6 +50,11 @@ const esUrl = new URL(switchLocalePath(Astro.url.pathname, 'es'), Astro.site).to
       })();
     </script>
 
+    {
+      [interLatin, groteskLatin, monoLatin].map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ))
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="en" href={enUrl} />

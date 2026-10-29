@@ -80,7 +80,7 @@ const timeline = [
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"></span>
             <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
           </span>
-          Barcelona · {t('hero.status')}
+          {t('hero.location')}
         </p>
 
         <h1
@@ -91,7 +91,7 @@ const timeline = [
         </h1>
 
         <p class="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-          {t('hero.lead.pre')}<em class="text-ink not-italic">{t('hero.lead.em')}</em>{t('hero.lead.post')}
+          {t('hero.lead.pre')}{t('hero.lead.em') && <em class="text-ink not-italic">{t('hero.lead.em')}</em>}{t('hero.lead.post')}
         </p>
 
         <div class="mt-8 flex flex-wrap items-center gap-3">
@@ -163,18 +163,11 @@ const timeline = [
 
           <div class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink/80">
             <p>{t('about.p1')}</p>
-            <details class="group">
-              <summary
-                class="inline-flex cursor-pointer list-none items-center gap-1.5 font-mono text-sm text-accent transition-opacity hover:opacity-80 [&::-webkit-details-marker]:hidden"
-              >
-                {t('about.more')}
-                <span class="transition-transform group-open:rotate-90" aria-hidden="true">→</span>
-              </summary>
-              <div class="mt-4 space-y-4">
-                <p>{t('about.p2')}</p>
-                <p>{t('about.p3')}</p>
-              </div>
-            </details>
+            <p>{t('about.p2')}</p>
+            <p>{t('about.p3')}</p>
+            <p>{t('about.p4')}</p>
+            <!-- Closes the story with where I'm headed. -->
+            <p class="font-medium text-ink">{t('about.open')}</p>
           </div>
 
           <ol class="mt-8 space-y-3 border-t border-line pt-6">

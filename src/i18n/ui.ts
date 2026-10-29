@@ -27,7 +27,7 @@ export const ui = {
     'hero.lead.em': 'why',
     'hero.lead.post': ' they happen.',
     'hero.cta.projects': 'View projects',
-    'hero.status': 'open to work',
+    'hero.location': 'Barcelona · Remote',
 
     'projects.heading': 'Featured projects',
     'projects.subheading': 'Self-contained and runnable - clone, run, inspect end to end.',
@@ -50,13 +50,15 @@ export const ui = {
 
     'about.heading': 'About',
     'about.subheading': 'Background and career path.',
+    'about.open': 'Now open to QA roles, in Barcelona and remotely.',
     'about.p1':
-      "My path into QA wasn't direct. Before this, I spent over a decade in cultural management and customer service coordinating theatre productions, managing an EU architecture prize, and handling international mediation for Airbnb and Booking.com. That work involved the same core skills I use now: understanding requirements, communicating with stakeholders, and catching problems early.",
+      "I'm a QA Engineer who combines functional testing and automation with AI tools across the whole QA cycle, from requirements analysis to test generation and bug triage. I also have experience leading teams in Agile, Scrum and Kanban environments.",
     'about.p2':
-      'In 2018 I retrained as a developer at Factoría F5 and spent four years as a Frontend Developer at GFT Group. I moved into QA in 2023, leading the QA team at Basetis. I combine functional testing and automation (Playwright, TypeScript, API and load testing) with AI tools across the QA cycle, from requirements analysis to test generation and bug triage.',
+      'I came to QA from development: I spent four years as a Frontend Developer. Knowing the code from the inside helps me write maintainable tests and understand how development teams think.',
     'about.p3':
-      "At Basetis I also managed and coordinated the QA team, working in Agile, Scrum and Kanban environments. I hold a Master's in Cultural Management (Universitat de Barcelona) and a BA in Art History & Cultural Heritage (Università degli Studi di Cagliari), and I'm particularly drawn to projects with social impact.",
-    'about.more': 'Read more',
+      "Before tech, I spent over a decade in cultural management and customer service: I coordinated theatre productions, was part of the team organising a European architecture prize, and handled international mediation for Airbnb and Booking.com. That's where the skills I use every day come from: understanding requirements, communicating with stakeholders and catching problems early.",
+    'about.p4':
+      "I hold a BA in Art History & Cultural Heritage (Università degli Studi di Cagliari) and a Master's in Cultural Management (Universitat de Barcelona), and I'm particularly drawn to projects with social impact.",
     'about.linkedin': 'Connect on LinkedIn',
     'about.languages': 'Languages',
     'about.lang.1': 'Italian (native)',
@@ -137,11 +139,11 @@ export const ui = {
     'hero.title.line1': 'Soy Gabriele,',
     'hero.title.line2': 'QA Engineer.',
     'hero.lead.pre':
-      'Clarifico requisitos, prevengo defectos desde el principio y creo automatización de pruebas en la que los equipos pueden confiar. Menos contar bugs, más entender ',
-    'hero.lead.em': 'por qué',
-    'hero.lead.post': ' ocurren.',
+      'Convierto requisitos ambiguos en criterios claros, prevengo errores desde el principio y creo tests automatizados fiables.',
+    'hero.lead.em': '',
+    'hero.lead.post': '',
     'hero.cta.projects': 'Ver proyectos',
-    'hero.status': 'disponible',
+    'hero.location': 'Barcelona · Remoto',
 
     'projects.heading': 'Proyectos destacados',
     'projects.subheading': 'Autocontenidos y ejecutables: clona, ejecuta e inspecciona de principio a fin.',
@@ -164,13 +166,15 @@ export const ui = {
 
     'about.heading': 'Sobre mí',
     'about.subheading': 'Trayectoria profesional.',
+    'about.open': 'Ahora, abierto a nuevas oportunidades en QA, en Barcelona y en remoto.',
     'about.p1':
-      'Mi camino hacia el QA no fue directo. Antes de esto, pasé más de una década en gestión cultural y atención al cliente, coordinando producciones teatrales, gestionando un premio europeo de arquitectura y llevando la mediación internacional para Airbnb y Booking.com. Ese trabajo implicaba las mismas habilidades clave que uso ahora: entender requisitos, comunicarme con stakeholders y detectar problemas a tiempo.',
+      'Soy QA Engineer y combino testing funcional y automatización con herramientas de IA en todo el ciclo de QA, desde el análisis de requisitos hasta la generación de tests y el triage de bugs. También tengo experiencia liderando equipos en entornos Agile, Scrum y Kanban.',
     'about.p2':
-      'En 2018 me reciclé como desarrollador en Factoría F5 y pasé cuatro años como Frontend Developer en GFT Group. Di el salto a QA en 2023, liderando el equipo de QA en Basetis. Combino testing funcional y automatización (Playwright, TypeScript, testing de API y de carga) con herramientas de IA en todo el ciclo de QA, desde el análisis de requisitos hasta la generación de tests y el triage de bugs.',
+      'Llegué al QA desde el desarrollo: trabajé cuatro años como Frontend Developer. Conocer el código desde dentro me ayuda a escribir tests mantenibles y a entender cómo piensan los equipos de desarrollo.',
     'about.p3':
-      'En Basetis también gestioné y coordiné el equipo de QA, trabajando en entornos Agile, Scrum y Kanban. Tengo un Máster en Gestión Cultural (Universitat de Barcelona) y un grado en Historia del Arte y Patrimonio Cultural (Università degli Studi di Cagliari), y me atraen especialmente los proyectos con impacto social.',
-    'about.more': 'Leer más',
+      'Antes de la tecnología pasé más de una década en gestión cultural y atención al cliente: coordiné producciones teatrales, formé parte del equipo organizador de un premio europeo de arquitectura y llevé la mediación internacional para Airbnb y Booking.com. De ahí vienen habilidades que uso cada día: entender requisitos, comunicarme con stakeholders y detectar problemas a tiempo.',
+    'about.p4':
+      'Tengo un grado en Historia del Arte y Patrimonio Cultural (Università degli Studi di Cagliari) y un Máster en Gestión Cultural (Universitat de Barcelona), y me atraen especialmente los proyectos con impacto social.',
     'about.linkedin': 'Conectar en LinkedIn',
     'about.languages': 'Idiomas',
     'about.lang.1': 'Italiano (nativo)',

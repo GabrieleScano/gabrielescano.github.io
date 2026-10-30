@@ -56,7 +56,7 @@ const icon = 'h-4 w-4 shrink-0 text-muted';
       </svg>
       <!-- Shown briefly after copying: the label is hidden on phones, so the
            icon itself confirms. -->
-      <svg class="h-4 w-4 shrink-0 text-accent" data-contact-copied-icon hidden viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="hidden h-4 w-4 shrink-0 text-accent" data-contact-copied-icon viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M13.5 4.5 6.5 11.5 3 8"></path>
       </svg>
       <span class="max-md:sr-only" data-contact-copy-label>{t('contact.email.copy')}</span>
@@ -142,8 +142,9 @@ const icon = 'h-4 w-4 shrink-0 text-muted';
     const showCopied = (on: boolean) => {
       label.textContent = on ? copiedLabel : copyLabel;
       status.textContent = on ? copiedLabel : '';
-      copyIcon.toggleAttribute('hidden', on);
-      copiedIcon.toggleAttribute('hidden', !on);
+      // SVG has no `hidden` attribute in the type definitions: toggle the class.
+      copyIcon.classList.toggle('hidden', on);
+      copiedIcon.classList.toggle('hidden', !on);
     };
     copyBtn?.addEventListener('click', async () => {
       try {

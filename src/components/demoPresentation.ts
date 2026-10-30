@@ -17,14 +17,14 @@ const COPY = {
   en: {
     severity: { high: 'HIGH', medium: 'MED', low: 'LOW' },
     tone: { clear: 'Clear', needsWork: 'Needs work', unclear: 'Unclear' },
-    noIssues: 'No issues detected — criteria look clear and testable.',
+    noIssues: 'No issues detected. The criteria look clear and testable.',
     empty: 'Paste a user story and its criteria to analyse them.',
     findings: (n: number) => `${n} finding${n === 1 ? '' : 's'}`,
   },
   es: {
     severity: { high: 'ALTO', medium: 'MED', low: 'BAJO' },
     tone: { clear: 'Claro', needsWork: 'Necesita trabajo', unclear: 'Poco claro' },
-    noIssues: 'No se detectaron problemas — los criterios parecen claros y verificables.',
+    noIssues: 'No se detectaron problemas. Los criterios parecen claros y verificables.',
     empty: 'Pega una historia de usuario y sus criterios para analizarlos.',
     findings: (n: number) => `${n} hallazgo${n === 1 ? '' : 's'}`,
   },

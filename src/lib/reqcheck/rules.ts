@@ -167,7 +167,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
     findings.push({
       category: 'testability',
       severity: 'high',
-      message: 'No acceptance criteria provided — the story cannot be objectively verified.',
+      message: 'No acceptance criteria provided, so the story cannot be objectively verified.',
     });
     return findings;
   }
@@ -179,7 +179,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
       findings.push({
         category: 'testability',
         severity: 'high',
-        message: 'Empty acceptance criterion — remove the placeholder or describe the expectation.',
+        message: 'Empty acceptance criterion: remove the placeholder or describe the expectation.',
         criterion,
       });
       continue;
@@ -193,7 +193,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
         category: 'testability',
         severity: 'high',
         message:
-          'Criterion is too short to state a verifiable expectation — describe the condition and the expected outcome.',
+          'Criterion is too short to state a verifiable expectation. Describe the condition and the expected outcome.',
         criterion,
       });
     }
@@ -207,7 +207,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
         findings.push({
           category: 'ambiguity',
           severity: 'medium',
-          message: `Ambiguous term "${term}" — replace with an objective, testable expectation.`,
+          message: `Ambiguous term "${term}": replace it with an objective, testable expectation.`,
           criterion,
         });
       }
@@ -218,7 +218,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
         findings.push({
           category: 'measurability',
           severity: 'medium',
-          message: `"${term}" implies a threshold but none is given — specify a measurable value.`,
+          message: `"${term}" implies a threshold but none is given. Specify a measurable value.`,
           criterion,
         });
       }
@@ -230,7 +230,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
         findings.push({
           category: 'testability',
           severity: 'low',
-          message: `Weak modal "${term}" — state whether the behaviour is required, so it can be verified.`,
+          message: `Weak modal "${term}": state whether the behaviour is required, so it can be verified.`,
           criterion,
         });
       }
@@ -257,7 +257,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
       findings.push({
         category: 'structure',
         severity: 'medium',
-        message: 'Duplicate acceptance criterion — remove the repetition or clarify the difference.',
+        message: 'Duplicate acceptance criterion: remove the repetition or clarify the difference.',
         criterion,
       });
     }
@@ -271,7 +271,7 @@ export function runRuleChecks(story: UserStory): Finding[] {
       category: 'missing-edge-case',
       severity: 'high',
       message:
-        'No negative or error path described — consider invalid input, empty values and failure handling.',
+        'No negative or error path described. Consider invalid input, empty values and failure handling.',
     });
   }
 

@@ -1,6 +1,6 @@
 ---
 title: requirements-analyzer
-tagline: Una CLI que revisa historias de usuario en busca de ambigüedades y casos límite faltantes — reglas deterministas más una capa opcional de IA.
+tagline: Una CLI que revisa historias de usuario en busca de ambigüedades y casos límite faltantes, con reglas deterministas más una capa opcional de IA.
 order: 2
 repo: https://github.com/GabrieleScano/requirements-analyzer
 testCount: 26

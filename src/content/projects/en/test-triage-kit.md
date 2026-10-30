@@ -40,8 +40,8 @@ ingest → classify → fingerprint/cluster → history → verdict → (AI enri
 A rule engine classifies each failure (`assertion` / `timeout` / `network` /
 `crash` / `setup`); fingerprinting hashes the normalized category + selector +
 message so failures with one root cause cluster together; an append-only run
-history flags flaky patterns; and every failure gets a stated verdict —
-`likely-bug`, `likely-flaky` or `infrastructure` - with reasons. Outputs
+history flags flaky patterns; and every failure gets a stated verdict
+(`likely-bug`, `likely-flaky` or `infrastructure`) with reasons. Outputs
 include Markdown reports, a static HTML triage page, a GitHub Issues / Jira
 lifecycle (update, don't duplicate) and a Slack digest.
 

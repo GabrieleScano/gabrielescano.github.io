@@ -43,10 +43,10 @@ export const ui = {
       'The cheapest defect to fix is an ambiguous requirement. I turn user stories into clear, testable scenarios before any code is written.',
     'approach.automation.title': 'automation that lasts',
     'approach.automation.body':
-      'Maintainable design — Page Object Model, semantic locators, web-first assertions, isolated tests — so suites stay trustworthy as they grow.',
+      'Maintainable design (Page Object Model, semantic locators, web-first assertions, isolated tests), so suites stay trustworthy as they grow.',
     'approach.ai.title': 'AI, with judgement',
     'approach.ai.body':
-      'I use AI to accelerate test design and requirements review — validated and bounded, never replacing engineering judgement.',
+      'I use AI to accelerate test design and requirements review, always validated and bounded, never replacing engineering judgement.',
 
     'about.heading': 'About',
     'about.subheading': 'Background and career path.',
@@ -91,12 +91,12 @@ export const ui = {
     'demo.eyebrow': 'requirements-analyzer · live',
     'demo.title': 'Analyze a user story',
     'demo.lead':
-      'Shift-left, in real time. Paste a story and its acceptance criteria — the deterministic rule engine flags ambiguities, missing edge cases and testability problems, and scores how clear and verifiable the requirement is.',
+      'Shift-left, in real time. Paste a story and its acceptance criteria: the deterministic rule engine flags ambiguities, missing edge cases and testability problems, and scores how clear and verifiable the requirement is.',
     'demo.note':
       'Note: the rule engine analyzes English text, so the story, criteria and findings below stay in English.',
-    'demo.page.title': 'Live demo — requirements-analyzer',
+    'demo.page.title': 'Live demo · requirements-analyzer',
     'demo.page.description':
-      'Paste a user story and acceptance criteria and see ambiguities, missing edge cases and a clarity score in real time — the same rule engine that powers the CLI, running in your browser.',
+      'Paste a user story and acceptance criteria and see ambiguities, missing edge cases and a clarity score in real time, with the same rule engine that powers the CLI running in your browser.',
 
     'demo.widget.tryExample': 'Try an example',
     'demo.widget.flawed': 'Flawed story',
@@ -106,7 +106,7 @@ export const ui = {
     'demo.widget.criteria': 'Acceptance criteria',
     'demo.widget.criteriaHint': '(one per line)',
     'demo.widget.runsInBrowser':
-      'Runs entirely in your browser — the same deterministic rule engine that powers the CLI. No data leaves this page.',
+      'Runs entirely in your browser, with the same deterministic rule engine that powers the CLI. No data leaves this page.',
     'demo.widget.clarityScore': 'Clarity score',
 
     'projectDetail.tryDemo': 'Try the live demo ↗',
@@ -114,7 +114,7 @@ export const ui = {
     'projectDetail.ciPipeline': 'CI pipeline ↗',
     'projectDetail.liveReport': 'Live test report ↗',
 
-    'privacy.page.title': 'Privacy Policy — Gabriele Scano',
+    'privacy.page.title': 'Privacy Policy · Gabriele Scano',
     'privacy.page.description': 'How this site uses Google Analytics and cookies, and how to opt out.',
     'privacy.updated': 'Last updated',
     'privacy.title': 'Privacy Policy',
@@ -159,7 +159,7 @@ export const ui = {
       'El defecto más barato de arreglar es un requisito ambiguo. Convierto historias de usuario en escenarios claros y verificables antes de escribir una sola línea de código.',
     'approach.automation.title': 'automatización que perdura',
     'approach.automation.body':
-      'Diseño mantenible — Page Object Model, localizadores semánticos, aserciones web-first, tests aislados — para que las suites sigan siendo fiables a medida que crecen.',
+      'Diseño mantenible (Page Object Model, localizadores semánticos, aserciones web-first, tests aislados), para que las suites sigan siendo fiables a medida que crecen.',
     'approach.ai.title': 'IA, con criterio',
     'approach.ai.body':
       'Uso IA para acelerar el diseño de tests y la revisión de requisitos, siempre validada y acotada, sin sustituir nunca el criterio de ingeniería.',
@@ -210,7 +210,7 @@ export const ui = {
       'Shift-left, en tiempo real. Pega una historia y sus criterios de aceptación: el motor de reglas determinista señala ambigüedades, casos límite faltantes y problemas de verificabilidad, y puntúa cuán clara y comprobable es la historia.',
     'demo.note':
       'Nota: el motor de reglas analiza texto en inglés, así que la historia, los criterios y los resultados se mantienen en inglés.',
-    'demo.page.title': 'Demo en vivo — requirements-analyzer',
+    'demo.page.title': 'Demo en vivo · requirements-analyzer',
     'demo.page.description':
       'Pega una historia de usuario y sus criterios de aceptación y ve ambigüedades, casos límite faltantes y una puntuación de claridad en tiempo real: el mismo motor de reglas que usa la CLI, corriendo en tu navegador.',
 
@@ -222,7 +222,7 @@ export const ui = {
     'demo.widget.criteria': 'Criterios de aceptación',
     'demo.widget.criteriaHint': '(uno por línea)',
     'demo.widget.runsInBrowser':
-      'Se ejecuta enteramente en tu navegador — el mismo motor de reglas determinista que usa la CLI. Ningún dato sale de esta página.',
+      'Se ejecuta enteramente en tu navegador, con el mismo motor de reglas determinista que usa la CLI. Ningún dato sale de esta página.',
     'demo.widget.clarityScore': 'Puntuación de claridad',
 
     'projectDetail.tryDemo': 'Probar la demo en vivo ↗',
@@ -230,7 +230,7 @@ export const ui = {
     'projectDetail.ciPipeline': 'Pipeline de CI ↗',
     'projectDetail.liveReport': 'Informe de tests en vivo ↗',
 
-    'privacy.page.title': 'Política de privacidad — Gabriele Scano',
+    'privacy.page.title': 'Política de privacidad · Gabriele Scano',
     'privacy.page.description': 'Cómo usa este sitio Google Analytics y cookies, y cómo desactivarlas.',
     'privacy.updated': 'Última actualización',
     'privacy.title': 'Política de privacidad',

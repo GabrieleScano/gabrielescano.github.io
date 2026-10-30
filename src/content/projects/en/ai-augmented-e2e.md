@@ -49,8 +49,8 @@ against SauceDemo, a stable public demo application.
 
 Page Objects expose intent-revealing actions only and keep their locators
 private, so specs read like behaviour, not selectors. Locators are semantic
-(`getByRole`, `getByPlaceholder`, `getByTestId`) and assertions are auto-waiting
-— there is no `waitForTimeout` anywhere. Each test is isolated and independent:
+(`getByRole`, `getByPlaceholder`, `getByTestId`) and assertions are auto-waiting,
+so there is no `waitForTimeout` anywhere. Each test is isolated and independent:
 no shared state, no implicit ordering.
 
 ## AI, with judgement

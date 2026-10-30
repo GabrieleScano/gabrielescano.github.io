@@ -1,6 +1,6 @@
 ---
 title: requirements-analyzer
-tagline: A CLI that reviews user stories for ambiguities and missing edge cases — deterministic rules plus an optional AI layer.
+tagline: A CLI that reviews user stories for ambiguities and missing edge cases, with deterministic rules plus an optional AI layer.
 order: 2
 repo: https://github.com/GabrieleScano/requirements-analyzer
 testCount: 26

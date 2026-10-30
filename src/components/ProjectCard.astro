@@ -30,8 +30,10 @@ const hiddenCount = stack.length - visibleStack.length;
 ---
 
 <article
-  class="group relative flex flex-col rounded-2xl border border-line bg-surface p-6 transition-all hover:border-accent/40 hover:shadow-[0_1px_0_0_var(--color-line),0_18px_40px_-24px_rgba(21,128,61,0.35)]"
+  data-tilt
+  class="project-card group relative flex flex-col rounded-2xl border border-line bg-surface p-6 transition-all hover:border-accent/40 hover:shadow-[0_1px_0_0_var(--color-line),0_18px_40px_-24px_rgba(21,128,61,0.35)]"
 >
+  <span class="project-card-glare" aria-hidden="true"></span>
   <div class="flex items-baseline justify-between gap-3">
     <div class="flex min-w-0 items-baseline gap-3">
       <span class="font-mono text-sm text-accent">{num}</span>
@@ -85,3 +87,34 @@ const hiddenCount = stack.length - visibleStack.length;
     }
   </dl>
 </article>
+
+<script>
+  // Tilt: the card leans a little towards the pointer, with a soft glare.
+  // Mouse/trackpad only, and off for people who prefer reduced motion.
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (finePointer && !reduceMotion) {
+    for (const card of document.querySelectorAll<HTMLElement>('[data-tilt]')) {
+      let frame = 0;
+      card.addEventListener('pointermove', (event) => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          const box = card.getBoundingClientRect();
+          const x = (event.clientX - box.left) / box.width;
+          const y = (event.clientY - box.top) / box.height;
+          card.style.setProperty('--tilt-x', `${(0.5 - y) * 6}deg`);
+          card.style.setProperty('--tilt-y', `${(x - 0.5) * 6}deg`);
+          card.style.setProperty('--glare-x', `${x * 100}%`);
+          card.style.setProperty('--glare-y', `${y * 100}%`);
+          card.style.setProperty('--glare-on', '1');
+        });
+      });
+      card.addEventListener('pointerleave', () => {
+        cancelAnimationFrame(frame);
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+        card.style.setProperty('--glare-on', '0');
+      });
+    }
+  }
+</script>

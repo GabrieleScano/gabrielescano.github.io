@@ -276,3 +276,30 @@ html[data-theme='dark'] .hero-photo-img {
     );
   }
 }
+
+/* Project cards lean towards the pointer (script in ProjectCard.astro). */
+.project-card {
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+.project-card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 260px at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgb(255 255 255 / 0.55),
+    transparent 100%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--glare-on, 0);
+  transition: opacity 0.3s ease-out;
+}
+html[data-theme='dark'] .project-card-glare {
+  background: radial-gradient(
+    circle 260px at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgb(255 255 255 / 0.07),
+    transparent 100%
+  );
+  mix-blend-mode: normal;
+}

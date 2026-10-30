@@ -35,7 +35,7 @@ const links = [
       <ul class="flex items-center gap-6 text-sm">
         {
           links.map((link) => (
-            <li class="hidden sm:block">
+            <li class="hidden lg:block">
               <a
                 href={link.href}
                 class="text-muted transition-colors hover:text-ink"
@@ -45,7 +45,7 @@ const links = [
             </li>
           ))
         }
-        <li class="hidden sm:block">
+        <li class="hidden lg:block">
           <a
             href="https://linkedin.com/in/gabrielescano"
             class="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-muted transition-colors hover:border-accent hover:text-accent"
@@ -58,7 +58,7 @@ const links = [
             </svg>
           </a>
         </li>
-        <li class="hidden sm:block">
+        <li class="hidden lg:block">
           <a
             href="https://github.com/GabrieleScano"
             class="rounded-full border border-line bg-surface px-4 py-1.5 font-medium text-ink transition-colors hover:border-accent hover:text-accent"
@@ -68,7 +68,7 @@ const links = [
             GitHub
           </a>
         </li>
-        <li class="hidden sm:block">
+        <li class="hidden lg:block">
           <a
             href={langSwitchHref}
             class="flex h-9 items-center justify-center rounded-full border border-line bg-surface px-3 font-mono text-xs uppercase text-muted transition-colors hover:border-accent hover:text-accent"
@@ -93,7 +93,7 @@ const links = [
             </svg>
           </button>
         </li>
-        <li class="sm:hidden">
+        <li class="lg:hidden">
           <button
             id="mobile-menu-toggle"
             type="button"
@@ -116,13 +116,13 @@ const links = [
 
   <div
     id="mobile-nav-backdrop"
-    class="fixed inset-x-0 bottom-0 top-16 -z-10 bg-ink/20 opacity-0 pointer-events-none transition-opacity duration-200 ease-out sm:hidden"
+    class="fixed inset-x-0 bottom-0 top-16 -z-10 bg-ink/20 opacity-0 pointer-events-none transition-opacity duration-200 ease-out lg:hidden"
   >
   </div>
 
   <div
     id="mobile-nav"
-    class="absolute inset-x-0 top-full origin-top -translate-y-1 rounded-b-2xl border-b border-line bg-bg opacity-0 shadow-lg pointer-events-none transition-all duration-200 ease-out sm:hidden"
+    class="absolute inset-x-0 top-full origin-top -translate-y-1 rounded-b-2xl border-b border-line bg-bg opacity-0 shadow-lg pointer-events-none transition-all duration-200 ease-out lg:hidden"
   >
     <ul class="mx-auto max-w-6xl px-[var(--spacing-gutter)] py-3 text-base">
       {

@@ -228,14 +228,16 @@ html[data-theme='dark'] .hero-photo-src {
 html[data-theme='dark'] .hero-photo-img {
   filter: contrast(6) invert(1);
 }
-/* Desktop, scrolled to the top: the header turns see-through so the photo
-   shows behind it (toggled by the script in Header.astro). */
-@media (min-width: 1024px) {
-  #site-header[data-over-hero] {
-    background-color: transparent;
-    border-color: transparent;
-    backdrop-filter: none;
-  }
+/* Scrolled to the top, the header turns see-through so the hero texture
+   shows behind it (toggled by the script in Header.astro). The hero slides
+   up under it by the header's height. */
+:root {
+  --header-h: 69px;
+}
+#site-header[data-over-hero]:not(:has([aria-expanded='true'])) {
+  background-color: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
 }
 /* Below the lg breakpoint the hero is shorter and the text spans the full
    width, so the portrait shrinks to a half face in the top-right corner,
@@ -243,9 +245,9 @@ html[data-theme='dark'] .hero-photo-img {
 @media (max-width: 1023px) {
   .hero-photo-src::before {
     background-size: 640px auto;
-    background-position: right -290px top -110px;
+    background-position: right -290px top calc(var(--header-h) - 110px);
     mask-image: radial-gradient(
-      ellipse 200px 200px at calc(100% - 50px) 130px,
+      ellipse 200px 200px at calc(100% - 50px) calc(var(--header-h) + 130px),
       #000 55%,
       transparent 100%
     );

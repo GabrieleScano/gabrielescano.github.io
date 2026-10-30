@@ -168,9 +168,16 @@ body {
   position: absolute;
   inset: 0;
   --hero-clearing: #767676;
+  --header-clearing: #7c7c7c;
   /* Under the photo: a shadow cast from behind the face, stretching left and
      thinning out towards the edge, over the mid-grey fill. */
   background:
+    /* A strip under the header thins the dots behind the nav links. */
+    linear-gradient(
+      to bottom,
+      var(--header-clearing) calc(var(--header-h) - 8px),
+      transparent calc(var(--header-h) + 40px)
+    ),
     /* A clearing behind the text block keeps the dots there tiny. */
     radial-gradient(
       ellipse 620px 260px at 40% 54%,
@@ -246,6 +253,7 @@ html[data-theme='dark'] .hero-photo::after {
 html[data-theme='dark'] .hero-photo-src {
   /* The source is inverted here, so the clearing has to be darker, not lighter. */
   --hero-clearing: #555;
+  --header-clearing: #727272;
   filter: grayscale(1) brightness(1.05) contrast(1.35) invert(1);
 }
 html[data-theme='dark'] .hero-photo-img {
@@ -259,8 +267,30 @@ html[data-theme='dark'] .hero-photo-img {
 }
 #site-header[data-over-hero]:not(:has([aria-expanded='true'])) {
   background-color: transparent;
-  border-color: transparent;
-  backdrop-filter: none;
+}
+/* Once scrolled, a soft shadow (rather than a border line) lifts the header
+   off the content. */
+#site-header[data-scrolled] {
+  box-shadow:
+    0 1px 0 rgb(28 25 23 / 0.04),
+    0 8px 24px -12px rgb(28 25 23 / 0.18);
+}
+html[data-theme='dark'] #site-header[data-scrolled] {
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.4),
+    0 8px 24px -10px rgb(0 0 0 / 0.7);
+}
+/* Without the header's background the nav links sit on the dots: full ink
+   plus a soft halo in the page colour keeps them readable. */
+#site-header[data-over-hero] .nav-link {
+  color: var(--color-ink);
+  text-shadow:
+    0 0 2px var(--color-bg),
+    0 0 6px var(--color-bg),
+    0 0 12px var(--color-bg);
+}
+#site-header[data-over-hero] .nav-link:hover {
+  color: var(--color-accent);
 }
 /* Below the lg breakpoint the hero is shorter and the text spans the full
    width, so the portrait shrinks to a half face in the top-right corner,

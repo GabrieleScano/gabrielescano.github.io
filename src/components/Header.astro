@@ -19,7 +19,7 @@ const links = [
 
 <header
   id="site-header"
-  class="sticky top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-300 border-line/70 bg-bg/80 backdrop-blur supports-[backdrop-filter]:bg-bg/60"
+  class="sticky top-0 z-40 border-b transition-[background-color,box-shadow] duration-300 border-transparent bg-bg"
 >
   <div
     class="mx-auto flex max-w-6xl items-center justify-between px-[var(--spacing-gutter)] py-4"
@@ -38,7 +38,7 @@ const links = [
             <li class="hidden lg:block">
               <a
                 href={link.href}
-                class="text-muted transition-colors hover:text-ink"
+                class="nav-link text-muted transition-colors hover:text-ink"
               >
                 {link.label}
               </a>
@@ -216,8 +216,14 @@ const links = [
   // On pages whose hero slides under the header, keep the header see-through
   // while the page is scrolled to the very top.
   const header = document.getElementById('site-header');
-  if (header && document.querySelector('[data-hero-under-header]')) {
-    const syncTop = () => header.toggleAttribute('data-over-hero', window.scrollY < 8);
+  // On every page, the header casts a shadow once the page has scrolled.
+  if (header) {
+    const overHero = document.querySelector('[data-hero-under-header]') !== null;
+    const syncTop = () => {
+      const atTop = window.scrollY < 8;
+      header.toggleAttribute('data-scrolled', !atTop);
+      if (overHero) header.toggleAttribute('data-over-hero', atTop);
+    };
     syncTop();
     window.addEventListener('scroll', syncTop, { passive: true });
   }

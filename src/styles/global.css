@@ -200,6 +200,29 @@ body {
     transparent 100%
   );
 }
+/* Pointer lens: a soft dark spot under the cursor makes the dots around it
+   grow (light in the dark theme, where the source is inverted). Position and
+   visibility come from the script in Home.astro. */
+.hero-photo-src::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  --lens-tint: rgb(0 0 0 / 0.5);
+  background: radial-gradient(
+    circle 170px at var(--lens-x, -999px) var(--lens-y, -999px),
+    var(--lens-tint),
+    transparent 100%
+  );
+  /* Fade it out over the text block, like the clearing, so the text keeps
+     its contrast while the cursor crosses it. */
+  mask-image: radial-gradient(ellipse 620px 260px at 40% 54%, transparent 45%, #000 100%);
+  opacity: var(--lens-on, 0);
+  transition: opacity 0.4s ease-out;
+}
+html[data-theme='dark'] .hero-photo-src::after {
+  /* The source is inverted in the dark theme, so the spot has to be light. */
+  --lens-tint: rgb(255 255 255 / 0.75);
+}
 /* Recolours the black dots in the accent olive; white stays white. A pseudo-
    element rather than a div, so axe doesn't read it as the text's background. */
 .hero-photo::after {

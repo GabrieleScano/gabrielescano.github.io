@@ -225,3 +225,24 @@ const timeline = [
 
   <Footer />
 </BaseLayout>
+
+<script>
+  // Pointer lens on the hero portrait: the dots around the cursor grow.
+  // Mouse/trackpad only, and off for people who prefer reduced motion.
+  const hero = document.querySelector<HTMLElement>('[data-hero-under-header]');
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (hero && finePointer && !reduceMotion) {
+    let frame = 0;
+    hero.addEventListener('pointermove', (event) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const box = hero.getBoundingClientRect();
+        hero.style.setProperty('--lens-x', `${event.clientX - box.left}px`);
+        hero.style.setProperty('--lens-y', `${event.clientY - box.top}px`);
+        hero.style.setProperty('--lens-on', '1');
+      });
+    });
+    hero.addEventListener('pointerleave', () => hero.style.setProperty('--lens-on', '0'));
+  }
+</script>

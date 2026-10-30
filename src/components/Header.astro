@@ -140,18 +140,10 @@ const links = [
     </ul>
 
     <div class="border-t border-line px-[var(--spacing-gutter)] py-3">
-      <p class="px-3 font-mono text-xs uppercase tracking-widest text-muted">
+      <p class="font-mono text-xs uppercase tracking-widest text-muted">
         {t('nav.connect')}
       </p>
       <ul class="mx-auto mt-1 max-w-6xl text-base">
-        <li>
-          <a
-            href={langSwitchHref}
-            class="-mx-3 flex items-center gap-3 rounded-lg px-3 py-3 font-mono text-xs uppercase text-muted transition-colors hover:bg-surface hover:text-ink"
-          >
-            {otherLang === 'es' ? 'Español' : 'English'}
-          </a>
-        </li>
         <li>
           <a
             href="https://linkedin.com/in/gabrielescano"
@@ -179,6 +171,19 @@ const links = [
           </a>
         </li>
       </ul>
+    </div>
+
+    <div class="border-t border-line px-[var(--spacing-gutter)] py-2">
+      <a
+        href={langSwitchHref}
+        class="-mx-3 flex items-center gap-3 rounded-lg px-3 py-3 text-base text-muted transition-colors hover:bg-surface hover:text-ink"
+      >
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"></path>
+        </svg>
+        {otherLang === 'es' ? 'Español' : 'English'}
+      </a>
     </div>
   </div>
 </header>

@@ -8,7 +8,7 @@ export const ui = {
 
     'home.page.title': 'Gabriele Scano, QA Engineer',
     'home.page.description':
-      'QA Engineer in Barcelona. Test automation with Playwright + TypeScript, shift-left functional analysis, and AI-augmented QA.',
+      'Freelance QA Engineer in Barcelona. Test automation with Playwright + TypeScript, shift-left functional analysis, and AI-augmented QA.',
 
     'nav.projects': 'Projects',
     'nav.demo': 'Live demo',
@@ -27,7 +27,7 @@ export const ui = {
     'hero.lead.em': 'why',
     'hero.lead.post': ' they happen.',
     'hero.cta.projects': 'View projects',
-    'hero.location': 'Barcelona · Remote',
+    'hero.location': 'Freelance · Barcelona · Remote',
 
     'projects.heading': 'Featured projects',
     'projects.subheading': 'Self-contained and runnable - clone, run, inspect end to end.',
@@ -50,7 +50,7 @@ export const ui = {
 
     'about.heading': 'About',
     'about.subheading': 'Background and career path.',
-    'about.open': 'Now open to QA roles, in Barcelona and remotely.',
+    'about.open': 'Available for freelance projects and QA roles, in Barcelona and remotely.',
     'about.p1':
       "I'm a QA Engineer who combines functional testing and automation with AI tools across the whole QA cycle, from requirements analysis to test generation and bug triage. I also have experience leading teams in Agile, Scrum and Kanban environments.",
     'about.p2':
@@ -65,6 +65,8 @@ export const ui = {
     'about.lang.2': 'Spanish',
     'about.lang.3': 'Catalan',
     'about.lang.4': 'English',
+    'about.timeline.0.period': '2026–present',
+    'about.timeline.0': 'Freelance Consultant - Functional Analysis, QA & Web Development',
     'about.timeline.1': 'QA Engineer - Basetis',
     'about.timeline.2': 'Frontend Developer - GFT Group',
     'about.timeline.3':
@@ -124,7 +126,7 @@ export const ui = {
 
     'home.page.title': 'Gabriele Scano, QA Engineer',
     'home.page.description':
-      'QA Engineer en Barcelona. Automatización de tests con Playwright + TypeScript, análisis funcional shift-left e IA aplicada al QA.',
+      'QA Engineer freelance en Barcelona. Automatización de tests con Playwright + TypeScript, análisis funcional shift-left e IA aplicada al QA.',
 
     'nav.projects': 'Proyectos',
     'nav.demo': 'Demo en vivo',
@@ -143,7 +145,7 @@ export const ui = {
     'hero.lead.em': '',
     'hero.lead.post': '',
     'hero.cta.projects': 'Ver proyectos',
-    'hero.location': 'Barcelona · Remoto',
+    'hero.location': 'Freelance · Barcelona · Remoto',
 
     'projects.heading': 'Proyectos destacados',
     'projects.subheading': 'Autocontenidos y ejecutables: clona, ejecuta e inspecciona de principio a fin.',
@@ -166,7 +168,7 @@ export const ui = {
 
     'about.heading': 'Sobre mí',
     'about.subheading': 'Trayectoria profesional.',
-    'about.open': 'Ahora, abierto a nuevas oportunidades en QA, en Barcelona y en remoto.',
+    'about.open': 'Disponible para proyectos freelance y nuevas oportunidades en QA, en Barcelona y en remoto.',
     'about.p1':
       'Soy QA Engineer y combino testing funcional y automatización con herramientas de IA en todo el ciclo de QA, desde el análisis de requisitos hasta la generación de tests y el triage de bugs. También tengo experiencia liderando equipos en entornos Agile, Scrum y Kanban.',
     'about.p2':
@@ -181,6 +183,8 @@ export const ui = {
     'about.lang.2': 'Español',
     'about.lang.3': 'Catalán',
     'about.lang.4': 'Inglés',
+    'about.timeline.0.period': '2026–hoy',
+    'about.timeline.0': 'Consultor freelance - Análisis funcional, QA y desarrollo web',
     'about.timeline.1': 'QA Engineer - Basetis',
     'about.timeline.2': 'Frontend Developer - GFT Group',
     'about.timeline.3':

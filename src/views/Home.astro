@@ -5,6 +5,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ContactMenu from '../components/ContactMenu.astro';
+import { Image } from 'astro:assets';
+import { clientSites } from '../data/work';
 import { getLang, useTranslations, localeBase } from '../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -137,6 +139,52 @@ const timeline = [
           ))
         }
       </div>
+    </section>
+
+    <!-- Client websites: freelance development work, live sites. -->
+    <section
+      id="work"
+      class="mx-auto max-w-6xl scroll-mt-20 px-[var(--spacing-gutter)] py-12"
+    >
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-display text-3xl font-semibold tracking-tight text-ink">
+          {t('work.heading')}
+        </h2>
+        <p class="hidden max-w-xs text-right text-sm text-muted sm:block">
+          {t('work.subheading')}
+        </p>
+      </div>
+
+      <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          clientSites.map((site) => (
+            <li class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-all hover:border-accent/40">
+              <div class="aspect-[16/10] overflow-hidden border-b border-line">
+                <Image
+                  src={site.image}
+                  alt=""
+                  widths={[400, 640, 800]}
+                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                  loading="lazy"
+                  class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <p class="font-mono text-xs text-accent">{site.sector[lang]}</p>
+                <h3 class="mt-1 font-display text-lg font-semibold tracking-tight text-ink">
+                  <a href={site.url} target="_blank" rel="noopener" class="after:absolute after:inset-0">
+                    {site.name}
+                  </a>
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted">{site.description[lang]}</p>
+                <p class="mt-auto pt-4 font-mono text-xs text-muted group-hover:text-accent" aria-hidden="true">
+                  {new URL(site.url).hostname} · {t('work.visit')}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <!-- About + approach, side by side -->

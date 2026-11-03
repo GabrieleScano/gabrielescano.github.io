@@ -37,6 +37,10 @@ export const ui = {
     'projects.back': '← All projects',
     'projects.repo': 'GitHub ↗',
 
+    'work.heading': 'Client websites',
+    'work.subheading': 'Freelance projects, from requirements to launch.',
+    'work.visit': 'Visit site ↗',
+
     'approach.heading': 'How I work',
     'approach.shiftleft.title': 'shift-left',
     'approach.shiftleft.body':
@@ -154,6 +158,10 @@ export const ui = {
     'projects.stat.coverage': 'cross-browser · API · carga',
     'projects.back': '← Todos los proyectos',
     'projects.repo': 'GitHub ↗',
+
+    'work.heading': 'Webs para clientes',
+    'work.subheading': 'Proyectos freelance, de los requisitos al lanzamiento.',
+    'work.visit': 'Ver web ↗',
 
     'approach.heading': 'Cómo trabajo',
     'approach.shiftleft.title': 'shift-left',

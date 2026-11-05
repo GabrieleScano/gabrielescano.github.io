@@ -27,7 +27,7 @@ export const ui = {
     'hero.lead.em': 'why',
     'hero.lead.post': ' they happen.',
     'hero.cta.projects': 'View projects',
-    'hero.location': 'Freelance · Barcelona · Remote',
+    'hero.location': 'Barcelona · Hybrid / Remote',
 
     'projects.heading': 'Featured projects',
     'projects.subheading': 'Self-contained and runnable - clone, run, inspect end to end.',
@@ -149,7 +149,7 @@ export const ui = {
     'hero.lead.em': '',
     'hero.lead.post': '',
     'hero.cta.projects': 'Ver proyectos',
-    'hero.location': 'Freelance · Barcelona · Remoto',
+    'hero.location': 'Barcelona · Híbrido / Remoto',
 
     'projects.heading': 'Proyectos destacados',
     'projects.subheading': 'Autocontenidos y ejecutables: clona, ejecuta e inspecciona de principio a fin.',

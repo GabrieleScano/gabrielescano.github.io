@@ -1,7 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import alessandraSoi from '../assets/work/alessandra-soi.jpg';
 import evaDiez from '../assets/work/eva-diez.jpg';
-import vapInformatica from '../assets/work/vap-informatica.jpg';
 
 type Lang = 'en' | 'es';
 
@@ -33,16 +32,6 @@ export const clientSites: ClientSite[] = [
     description: {
       en: 'Official website of an actress working in film, TV and theatre: bio, CV, demo reel, gallery and contact, in Spanish, English and Italian.',
       es: 'Web oficial de una actriz de cine, televisión y teatro: bio, CV, videobook, galería y contacto, en español, inglés e italiano.',
-    },
-  },
-  {
-    name: 'VAP Informatica',
-    url: 'https://vapinformatica.it/',
-    image: vapInformatica,
-    sector: { en: 'IT shop & services', es: 'Tienda y servicios IT' },
-    description: {
-      en: 'Website for an IT shop and service provider in Cagliari: repairs, business IT, hotel and school solutions, shop and guides.',
-      es: 'Web para una tienda y empresa de servicios IT en Cagliari: reparaciones, IT para empresas, soluciones para hoteles y escuelas, tienda y guías.',
     },
   },
 ];

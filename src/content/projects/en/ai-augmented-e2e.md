@@ -1,63 +1,94 @@
 ---
 title: ai-augmented-e2e
-tagline: E2E framework with Playwright + TypeScript, POM and an AI module that derives test cases from acceptance criteria.
+tagline: Multi-SUT E2E framework (Playwright + TypeScript) with functional, visual-regression and accessibility tests, safe enough to run against a production app.
 order: 1
 repo: https://github.com/GabrieleScano/ai-augmented-e2e
 reportUrl: https://gabrielescano.github.io/ai-augmented-e2e/
-testCount: 22
+testCount: 55
 stack:
   - Playwright
   - TypeScript
   - Page Object Model
+  - axe-core
+  - Docker
   - GitHub Actions
   - Anthropic API
 metrics:
-  - label: E2E across Chromium · Firefox · WebKit
-    value: 16 specs
-  - label: AI-parser unit tests (browser-less project)
-    value: 6 specs
-  - label: Cross-browser CI on every push
-    value: 3 browsers
+  - label: Functional · visual · a11y · unit, each with a stable traceability ID
+    value: 55 tests
+  - label: A demo shop and a production PWA used by real families
+    value: 2 SUTs
+  - label: Real WCAG issues found in production and fixed the same day
+    value: 4 bugs
 highlights:
-  - Page Object Model with private locators and intent-revealing actions only.
-  - Semantic, web-first locators (getByRole / getByPlaceholder / getByTestId) - no fixed waits.
-  - AI output is validated (shape + enums), never trusted blindly, and covered by unit tests.
-  - Failures are auto-triaged in CI by test-triage-kit - classified, deduplicated and published as an artifact.
+  - One Playwright project per system under test, with its own page objects, fixtures and specs. Adding a SUT means adding a folder.
+  - Production-safe by construction. Any write request is aborted and fails the test, trackers are blocked, and the suite runs with one worker and no load tests.
+  - Deterministic visual regression with a frozen clock, mocked data and masks only where content really varies. Baselines are generated in the official Playwright Docker image.
+  - Accessibility gate (axe, WCAG 2 A/AA) with an explicit allowlist that fails on new violations and on fixes that shipped.
 ---
 
-A complete E2E automation workflow built to be inspectable end to end:
-maintainable design, cross-browser CI, and an AI layer that turns acceptance
-criteria into structured test cases plus shift-left observations. Tests run
-against SauceDemo, a stable public demo application.
+An E2E framework built to be inspectable end to end, now testing two very
+different systems. The first is SauceDemo, a public demo shop. The second is
+[Menú Escolar](https://menu-escolar-poble-sec-i62w.vercel.app/), my own
+school-canteen menu app, a mobile PWA in production used every day by families
+at the school.
 
-## What it demonstrates
+## Two systems under test
 
-- **Functional coverage** - authentication (valid, locked-out, data-driven
-  invalid logins, auth-guard redirects), cart, sorting and a full checkout
-  flow with validation.
-- **Maintainable design** - Page Object Model, custom fixtures, centralized
-  test data, semantic locators and web-first assertions.
-- **Cross-browser CI** - Chromium, Firefox and WebKit on every push, with
-  HTML and Allure reports as artifacts.
-- **Automated failure triage** - every run feeds
-  [test-triage-kit](https://github.com/GabrieleScano/test-triage-kit) through
-  its custom reporter; CI classifies failures (bug / flaky / infrastructure),
-  deduplicates them by root-cause fingerprint and publishes the triage report
-  as an artifact.
+| SUT | Environment | Coverage |
+|---|---|---|
+| SauceDemo | Desktop: Chromium, Firefox, WebKit | 16 functional · 2 visual · 2 a11y |
+| Menú Escolar | Mobile: Pixel 7 (Chromium), iPhone 13 (WebKit) | 14 functional · 6 visual · 6 a11y |
 
-## Design decisions
+Each SUT has its own Playwright projects, page objects, fixtures and specs,
+kept apart by folder. Every test title starts with a stable ID
+(`MENU-E2E-007`, `SAUCE-VIS-002`, ...), and a unit test fails on any missing or
+duplicate ID, so the suite can feed a traceability matrix.
 
-Page Objects expose intent-revealing actions only and keep their locators
-private, so specs read like behaviour, not selectors. Locators are semantic
-(`getByRole`, `getByPlaceholder`, `getByTestId`) and assertions are auto-waiting,
-so there is no `waitForTimeout` anywhere. Each test is isolated and independent:
-no shared state, no implicit ordering.
+## Testing production without touching it
 
-## AI, with judgement
+Menú Escolar has real users, so the safety rules live in a fixture rather than
+in each test. Any request other than GET is aborted and **fails the test**. The
+only write endpoint, push-notification tags, is unreachable. Analytics and push
+services are blocked, so runs don't skew real statistics. The service worker is
+off, the SUT gets **one worker**, and there are no load tests.
 
-The AI module takes a user story and acceptance criteria and returns structured
-test cases plus observations (ambiguities, missing edge cases). Its output is
-**never trusted blindly**: a dedicated parser strips markdown fences and
-validates the response shape and enum values, and that parser is covered by a
-browser-less unit-test project - so a malformed model response fails loudly
-instead of corrupting downstream tooling.
+## Deterministic visual regression
+
+The menu changes every day, which would make naive screenshots useless. So the
+clock is frozen with `page.clock`, the monthly menu files are replaced with
+fixed data through `page.route` while the app code stays live, and fonts are
+awaited. The only randomness left is a weekend greeting picked at random, and
+only that gets masked.
+
+Baselines are generated in the **official Playwright Docker image**, the same
+one CI runs in, through a manual workflow that commits them back. A unit test
+fails if the image tag and the Playwright version ever drift apart.
+
+## Accessibility that finds real bugs
+
+axe (WCAG 2 A/AA) runs on every screen of both apps. Known violations go into
+an explicit allowlist with a reason and a fix, never silently ignored. The
+checker also fails when an allowlisted violation *stops* reproducing, so the
+list shrinks as fixes ship.
+
+The first run found contrast and ARIA issues in Menú Escolar. They were fixed
+and deployed the same day, and the suite itself flagged the stale allowlist
+entries. Exploratory testing then found a keyboard-focus escape from modal
+sheets, which is now fixed and has a regression test.
+
+## AI, with judgement (and optional)
+
+The AI module turns a user story and its acceptance criteria into structured
+test cases plus shift-left observations. Its output is **never trusted
+blindly**: a parser validates shape and enum values, and that parser is
+covered by browser-less unit tests. The module is optional: CI never calls it,
+and without an API key it explains how to enable itself and exits cleanly.
+
+## Failure triage
+
+Every CI job feeds
+[test-triage-kit](https://github.com/GabrieleScano/test-triage-kit), which
+classifies failures (bug / flaky / infrastructure), deduplicates them by root
+cause and publishes the verdicts. The per-job reports are merged into a single
+live HTML report.

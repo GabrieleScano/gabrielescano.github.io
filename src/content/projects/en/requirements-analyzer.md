@@ -3,7 +3,7 @@ title: requirements-analyzer
 tagline: A CLI that reviews user stories for ambiguities and missing edge cases, with deterministic rules plus an optional AI layer.
 order: 2
 repo: https://github.com/GabrieleScano/requirements-analyzer
-testCount: 26
+testCount: 80
 stack:
   - TypeScript
   - Node.js
@@ -11,7 +11,7 @@ stack:
   - Anthropic API
 metrics:
   - label: Unit + CLI + AI-layer tests
-    value: 26 tests
+    value: 80 tests
   - label: Deterministic rule engine, zero deps
     value: offline
   - label: Non-zero exit on high-severity issues

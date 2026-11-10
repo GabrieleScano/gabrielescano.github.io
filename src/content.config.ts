@@ -18,6 +18,8 @@ const projects = defineCollection({
       repo: z.string().url(),
       /** Optional: published live test report (set once CI deploys it). */
       reportUrl: z.string().url().optional(),
+      /** Optional: published performance-trend page (history across CI runs). */
+      trendsUrl: z.string().url().optional(),
       /** Number of automated tests — summed into the hero counter. */
       testCount: z.number(),
       stack: z.array(z.string()),

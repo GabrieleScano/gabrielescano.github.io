@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, tagline, repo, reportUrl, stack, metrics, highlights } = project.data;
+const { title, tagline, repo, reportUrl, trendsUrl, stack, metrics, highlights } = project.data;
 const { Content } = await render(project);
 
 const lang = getLang(Astro.currentLocale);
@@ -76,6 +76,18 @@ const slug = project.id.split('/').slice(1).join('/');
             class="rounded-full border border-accent px-5 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent-soft"
           >
             {t('projectDetail.liveReport')}
+          </a>
+        )
+      }
+      {
+        trendsUrl && (
+          <a
+            href={trendsUrl}
+            target="_blank"
+            rel="noopener"
+            class="rounded-full border border-accent px-5 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent-soft"
+          >
+            {t('projectDetail.perfTrends')}
           </a>
         )
       }

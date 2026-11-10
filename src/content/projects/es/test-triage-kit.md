@@ -4,7 +4,7 @@ tagline: Pipeline de triage de fallos para Playwright - clasifica fallos, los de
 order: 4
 repo: https://github.com/GabrieleScano/test-triage-kit
 reportUrl: https://gabrielescano.github.io/test-triage-kit/
-testCount: 52
+testCount: 54
 stack:
   - TypeScript
   - Node.js
@@ -14,7 +14,7 @@ stack:
   - GitHub Actions
 metrics:
   - label: Tests unitarios en cada etapa del pipeline
-    value: 52 tests
+    value: 54 tests
   - label: Clasificación → huella → veredicto, determinista
     value: 5 etapas
   - label: Salidas a GitHub Issues o Jira Cloud

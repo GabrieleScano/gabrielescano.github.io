@@ -3,7 +3,7 @@ title: requirements-analyzer
 tagline: Una CLI que revisa historias de usuario en busca de ambigüedades y casos límite faltantes, con reglas deterministas más una capa opcional de IA.
 order: 2
 repo: https://github.com/GabrieleScano/requirements-analyzer
-testCount: 26
+testCount: 80
 stack:
   - TypeScript
   - Node.js
@@ -11,7 +11,7 @@ stack:
   - Anthropic API
 metrics:
   - label: Tests unitarios + CLI + capa de IA
-    value: 26 tests
+    value: 80 tests
   - label: Motor de reglas determinista, cero dependencias
     value: offline
   - label: Salida distinta de cero en incidencias de alta severidad

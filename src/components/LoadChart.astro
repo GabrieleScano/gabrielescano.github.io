@@ -74,12 +74,12 @@ const stats = isEs
     <p class="mt-1 text-sm text-muted">
       {isEs ? (
         <>
-          Una ejecución real de <code class="font-mono text-xs">k6/load.js</code> contra restful-booker:
+          Una ejecución real de <code class="font-mono text-xs">k6/load.js</code> contra el sandbox público de restful-booker:
           subida → estable → pico → bajada durante {summary.durationSec}s.
         </>
       ) : (
         <>
-          A real run of <code class="font-mono text-xs">k6/load.js</code> against restful-booker:
+          A real run of <code class="font-mono text-xs">k6/load.js</code> against the public restful-booker sandbox:
           ramp-up → steady → peak → ramp-down over {summary.durationSec}s.
         </>
       )}

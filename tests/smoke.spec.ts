@@ -82,6 +82,18 @@ test.describe('Project detail pages', () => {
     });
   }
 
+  test('api-performance-suite links to the report and the performance trends', async ({ page }) => {
+    await page.goto('/projects/api-performance-suite/');
+    await expect(page.getByRole('link', { name: /Live test report/ })).toHaveAttribute(
+      'href',
+      'https://gabrielescano.github.io/api-performance-suite/',
+    );
+    await expect(page.getByRole('link', { name: /Performance trends/ })).toHaveAttribute(
+      'href',
+      'https://gabrielescano.github.io/api-performance-suite/trends/',
+    );
+  });
+
   test('requirements-analyzer links to the live demo', async ({ page }) => {
     await page.goto('/projects/requirements-analyzer/');
     await expect(

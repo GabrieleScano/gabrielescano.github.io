@@ -119,6 +119,7 @@ export const ui = {
     'projectDetail.viewRepo': 'View repository ↗',
     'projectDetail.ciPipeline': 'CI pipeline ↗',
     'projectDetail.liveReport': 'Live test report ↗',
+    'projectDetail.perfTrends': 'Performance trends ↗',
 
     'privacy.page.title': 'Privacy Policy · Gabriele Scano',
     'privacy.page.description': 'How this site uses Google Analytics and cookies, and how to opt out.',
@@ -241,6 +242,7 @@ export const ui = {
     'projectDetail.viewRepo': 'Ver repositorio ↗',
     'projectDetail.ciPipeline': 'Pipeline de CI ↗',
     'projectDetail.liveReport': 'Informe de tests en vivo ↗',
+    'projectDetail.perfTrends': 'Tendencias de rendimiento ↗',
 
     'privacy.page.title': 'Política de privacidad · Gabriele Scano',
     'privacy.page.description': 'Cómo usa este sitio Google Analytics y cookies, y cómo desactivarlas.',
